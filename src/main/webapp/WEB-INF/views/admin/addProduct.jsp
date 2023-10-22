@@ -121,6 +121,7 @@
             <div class="row">
               <div class="col-12">
                 <h2 class="tm-block-title d-inline-block">Add Product</h2>
+                <p>${messageAddP}</p>
               </div>
             </div>
             <form:form action="AddProduct" modelAttribute="sach">
@@ -136,7 +137,7 @@
 			      <form:select class="custom-select tm-select-accounts" id="category" path="maTacGia">
 			        <form:option value="1">Select Author</form:option>
 			        <c:forEach var="item" items="${authors}">
-				        <form:option value="2">${item.getTenTG()}</form:option>
+				        <form:option value="${item.getMaTG()}">${item.getTenTG()}</form:option>
 			        </c:forEach>
 			      </form:select>
 			    </div>
@@ -146,7 +147,7 @@
 			      <form:select class="custom-select tm-select-accounts" id="category" path="maNXB">
 			        <form:option value="" >Select Publisher</form:option>
 			        <c:forEach var="item" items="${nxbs}">
-				        <form:option value="2">${item.getTenNXB()}</form:option>
+				        <form:option value="${item.getIdNXB()}">${item.getTenNXB()}</form:option>
 			        </c:forEach>
 			      </form:select>
 			    </div>
@@ -155,7 +156,7 @@
 			      <form:select class="custom-select tm-select-accounts" id="category" path="maTheLoai">
 			        <form:option value="">Select Category</form:option>
 			        <c:forEach var="item" items="${categories}">
-				        <form:option value="2">${item.getTenTheLoai()}</form:option>
+				        <form:option value="${item.getIdTheLoai()}">${item.getTenTheLoai()}</form:option>
 			        </c:forEach>
 			      </form:select>
 			    </div>

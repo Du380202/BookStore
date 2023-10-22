@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>  
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,6 +80,34 @@
         .avatar-wrapper:hover .dropdown-menu {
             display: block;
         }
+        .pagination {
+		  display: flex;
+		  justify-content: center; 
+		  margin-top: 20px;
+		  margin-bottom: 60px;
+		}
+		
+		.pagination a {
+		  color: black;
+		  float: left;
+		  padding: 8px 16px;
+		  text-decoration: none;
+		}
+		
+		.pagination a.active {
+		  background-color: #62ab00;
+		  color: white;
+		  border-radius: 5px;
+		}
+		
+		.pagination a.active:hover {
+		    color: #ffffff !important;
+    		background-color: #f7941d !important;
+		}
+		
+		.pagination a:hover:not(.active) {
+		  background-color: #ddd;
+		  border-radius: 5px;
 	    
 	</style>
 </head>
@@ -452,12 +482,12 @@
 
                             <!-- START DISPLAY PRODUCT -->
                             <div class="product-list row">
-
+								<c:forEach var="item" items="${products}">
                                 <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp"
                                     data-wow-delay=".2s">
                                     <div class="product-item owl-theme product-listing-carousel owl-carousel">
                                         <div class="item p-item-img">
-                                            <img src="<c:url value="https://www.netabooks.vn/Data/Sites/1/Product/23855/vu-tru-trong-vo-hat-de-5.jpg"/>" alt="images">
+                                            <img src="<c:url value="${item.getAnh1()}"/>" alt="images">
                                             <div class="text-center d-flex justify-content-center align-items-center">
                                                 <a class="listing-cart-icon" href="shop-cart.html">
                                                     <i class="fa fa-shopping-cart"></i>
@@ -465,7 +495,7 @@
                                             </div>
                                         </div>
                                         <div class="item p-item-img">
-                                            <img src="<c:url value="ASSETS/img/book-1-1.jpg"/>" alt="images">
+                                            <img src="<c:url value="${item.getAnh2()}"/>" alt="images">
                                             <div class="text-center d-flex justify-content-center align-items-center">
                                                 <a class="listing-cart-icon" href="shop-cart.html">
                                                     <i class="fa fa-shopping-cart"></i>
@@ -474,226 +504,87 @@
                                         </div>
                                     </div>
                                     <div class="p-item-detail">
-                                        <h4 class="text-center p-item-name"><a href="product-detail.html"> So Sad Today
+                                        <h4 class="text-center p-item-name"><a href="product-detail.html"> ${item.getTenSach()}
                                             </a></h4>
-                                        <p class="text-center p-item-price">$100.00</p>
+                                        <p class="text-center p-item-price">$${item.getGiaBan()}</p>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp"
-                                    data-wow-delay=".2s">
-                                    <div class="product-item owl-theme product-listing-carousel owl-carousel">
-                                        <div class="item p-item-img">
-                                            <img src="<c:url value="ASSETS/img/book-2-1.jpg"/>" alt="images">
-                                            <div class="text-center d-flex justify-content-center align-items-center">
-                                                <a class="listing-cart-icon" href="shop-cart.html">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="item p-item-img">
-                                            <img src="<c:url value="ASSETS/img/book-2-1.jpg"/>" alt="images">
-                                            <div class="text-center d-flex justify-content-center align-items-center">
-                                                <a class="listing-cart-icon" href="shop-cart.html">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="p-item-detail">
-                                        <h4 class="text-center p-item-name"><a href="product-detail.html"> The Last
-                                                Stand </a></h4>
-                                        <p class="text-center p-item-price">$600.00</p>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp"
-                                    data-wow-delay=".2s">
-                                    <div class="product-item owl-theme product-listing-carousel owl-carousel">
-                                        <div class="item p-item-img">
-                                            <img src="<c:url value="ASSETS/img/book-3-1.jpg"/>" alt="images">
-                                            <div class="text-center d-flex justify-content-center align-items-center">
-                                                <a class="listing-cart-icon" href="shop-cart.html">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="item p-item-img">
-                                            <img src="<c:url value="ASSETS/img/book-3.jpg"/>" alt="images">
-                                            <div class="text-center d-flex justify-content-center align-items-center">
-                                                <a class="listing-cart-icon" href="shop-cart.html">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="p-item-detail">
-                                        <h4 class="text-center p-item-name"><a href="product-detail.html"> Love Does
-                                            </a></h4>
-                                        <p class="text-center p-item-price">$150.00</p>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp"
-                                    data-wow-delay=".2s">
-                                    <div class="product-item owl-theme product-listing-carousel owl-carousel">
-                                        <div class="item p-item-img">
-                                            <img src="<c:url value="ASSETS/img/book-4.jpg"/>" alt="images">
-                                            <div class="text-center d-flex justify-content-center align-items-center">
-                                                <a class="listing-cart-icon" href="shop-cart.html">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="item p-item-img">
-                                            <img src="<c:url value="ASSETS/img/book-4-1.jpg"/>" alt="images">
-                                            <div class="text-center d-flex justify-content-center align-items-center">
-                                                <a class="listing-cart-icon" href="shop-cart.html">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="p-item-detail">
-                                        <h4 class="text-center p-item-name"><a href="product-detail.html">The Imortal
-                                                Rules </a></h4>
-                                        <p class="text-center p-item-price">$400.00</p>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp"
-                                    data-wow-delay=".2s">
-                                    <div class="product-item owl-theme product-listing-carousel owl-carousel">
-                                        <div class="item p-item-img">
-                                            <img src="<c:url value="ASSETS/img/book-5-1.jpg"/>" alt="images">
-                                            <div class="text-center d-flex justify-content-center align-items-center">
-                                                <a class="listing-cart-icon" href="shop-cart.html">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="item p-item-img">
-                                            <img src="<c:url value="ASSETS/img/book-5.jpg"/>" alt="images">
-                                            <div class="text-center d-flex justify-content-center align-items-center">
-                                                <a class="listing-cart-icon" href="shop-cart.html">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="p-item-detail">
-                                        <h4 class="text-center p-item-name"><a href="product-detail.html">As I lay Dying
-                                            </a></h4>
-                                        <p class="text-center p-item-price">$100.00</p>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp"
-                                    data-wow-delay=".2s">
-                                    <div class="product-item owl-theme product-listing-carousel owl-carousel">
-                                        <div class="item p-item-img">
-                                            <img src="<c:url value="ASSETS/img/book-6-1.jpg"/>" alt="images">
-                                            <div class="text-center d-flex justify-content-center align-items-center">
-                                                <a class="listing-cart-icon" href="shop-cart.html">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="item p-item-img">
-                                            <img src="<c:url value="ASSETS/img/book-6.jpg"/>" alt="images">
-                                            <div class="text-center d-flex justify-content-center align-items-center">
-                                                <a class="listing-cart-icon" href="shop-cart.html">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="p-item-detail">
-                                        <h4 class="text-center p-item-name"><a href="product-detail.html"> No One
-                                                Belongs </a></h4>
-                                        <p class="text-center p-item-price">$500.00</p>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp"
-                                    data-wow-delay=".2s">
-                                    <div class="product-item owl-theme product-listing-carousel owl-carousel">
-                                        <div class="item p-item-img">
-                                            <img src="img\<c:url value="ASSETS/img/book-2.jpg"/>" alt="images">
-                                            <div class="text-center d-flex justify-content-center align-items-center">
-                                                <a class="listing-cart-icon" href="shop-cart.html">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="item p-item-img">
-                                            <img src="<c:url value="ASSETS/img/book-2-1.jpg"/>" alt="images">
-                                            <div class="text-center d-flex justify-content-center align-items-center">
-                                                <a class="listing-cart-icon" href="shop-cart.html">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="p-item-detail">
-                                        <h4 class="text-center p-item-name"><a href="product-detail.html"> Life Without
-                                                Money </a></h4>
-                                        <p class="text-center p-item-price">$200.00</p>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp"
-                                    data-wow-delay=".2s">
-                                    <div class="product-item owl-theme product-listing-carousel owl-carousel">
-                                        <div class="item p-item-img">
-                                            <img src="<c:url value="ASSETS/img/book-6.jpg"/>" alt="images">
-                                            <div class="text-center d-flex justify-content-center align-items-center">
-                                                <a class="listing-cart-icon" href="shop-cart.html">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="item p-item-img">
-                                            <img src="<c:url value="ASSETS/img/book-6-1.jpg"/>" alt="images">
-                                            <div class="text-center d-flex justify-content-center align-items-center">
-                                                <a class="listing-cart-icon" href="shop-cart.html">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="p-item-detail">
-                                        <h4 class="text-center p-item-name"><a href="product-detail.html"> Brave New
-                                                World </a></h4>
-                                        <p class="text-center p-item-price">$120.00</p>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp"
-                                    data-wow-delay=".2s">
-                                    <div class="product-item owl-theme product-listing-carousel owl-carousel">
-                                        <div class="item p-item-img">
-                                            <img src="<c:url value="ASSETS/img/book-1-1.jpg"/>" alt="images">
-                                            <div class="text-center d-flex justify-content-center align-items-center">
-                                                <a class="listing-cart-icon" href="shop-cart.html">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="item p-item-img">
-                                            <img src="<c:url value="ASSETS/img/book-1.jpg"/>" alt="images">
-                                            <div class="text-center d-flex justify-content-center align-items-center">
-                                                <a class="listing-cart-icon" href="shop-cart.html">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="p-item-detail">
-                                        <h4 class="text-center p-item-name"><a href="product-detail.html">The Joke </a>
-                                        </h4>
-                                        <p class="text-center p-item-price">$150.00</p>
-                                    </div>
-                                </div>
-
-
-
+                                
+                                </c:forEach>
                             </div>
                             <!-- END DISPLAY PRODUCT -->
+							<div class="pagination">
+							    <c:if test="${currentPage > 1}">
+							        <a href="<c:url value='list?currentPage=${currentPage - 1}'/>">&laquo;</a>
+							    </c:if>
+							
+							    <c:choose>
+							        <c:when test="${totalPage <= 5}">
+							            <c:forEach var="page" begin="1" end="${totalPage}">
+							                <c:choose>
+							                    <c:when test="${currentPage == page}">
+							                        <a href="#" class="active">${page}</a>
+							                    </c:when>
+							                    <c:otherwise>
+							                        <a href="<c:url value='list?currentPage=${page}'/>">${page}</a>
+							                    </c:otherwise>
+							                </c:choose>
+							            </c:forEach>
+							        </c:when>
+							        <c:otherwise>
+							            <c:choose>
+							                <c:when test="${currentPage <= 2}">
+							                    <c:forEach var="page" begin="1" end="3">
+							                        <c:choose>
+							                            <c:when test="${currentPage == page}">
+							                                <a href="#" class="active">${page}</a>
+							                            </c:when>
+							                            <c:otherwise>
+							                                <a href="<c:url value='list?currentPage=${page}'/>">${page}</a>
+							                            </c:otherwise>
+							                        </c:choose>
+							                    </c:forEach>
+							                    <span>...</span>
+							                    <a href="<c:url value='list?currentPage=${totalPage}'/>">${totalPage}</a>
+							                </c:when>
+							                <c:when test="${currentPage >= totalPage - 1}">
+							                    <a href="<c:url value='list?currentPage=1'/>">1</a>
+							                    <span>...</span>
+							                    <c:forEach var="page" begin="${totalPage - 2}" end="${totalPage}">
+							                        <c:choose>
+							                            <c:when test="${currentPage == page}">
+							                                <a href="#" class="active">${page}</a>
+							                            </c:when>
+							                            <c:otherwise>
+							                                <a href="<c:url value='list?currentPage=${page}'/>">${page}</a>
+							                            </c:otherwise>
+							                        </c:choose>
+							                    </c:forEach>
+							                </c:when>
+							                <c:otherwise>
+							                    <a href="<c:url value='list?currentPage=1'/>">1</a>
+							                    <span>...</span>
+							                    <c:forEach var="page" begin="${currentPage - 1}" end="${currentPage + 1}">
+							                        <c:choose>
+							                            <c:when test="${currentPage == page}">
+							                                <a href="#" class="active">${page}</a>
+							                            </c:when>
+							                            <c:otherwise>
+							                                <a href="<c:url value='list?currentPage=${page}'/>">${page}</a>
+							                            </c:otherwise>
+							                        </c:choose>
+							                    </c:forEach>
+							                    <span>...</span>
+							                    <a href="<c:url value='list?currentPage=${totalPage}'/>">${totalPage}</a>
+							                </c:otherwise>
+							            </c:choose>
+							        </c:otherwise>
+							    </c:choose>
+							
+							    <c:if test="${currentPage < totalPage}">
+							        <a href="<c:url value='list?currentPage=${currentPage + 1}'/>">&raquo;</a>
+							    </c:if>
+							</div>
 
 
                         </div>

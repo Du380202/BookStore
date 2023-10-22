@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -60,6 +61,22 @@ public class CartDao {
 	    
 	    return gioHangList;
 	}
+	
+	public void delete(ChiTietGioHang tacGia) {
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		try {
+				session.delete(tacGia);
+				t.commit();
+		}
+		catch (Exception e) {
+			t.rollback();
+		}
+		finally {
+			session.close();
+		}
+		
+	}
 
 	
 	public List<ChiTietGioHang> getDataCartByUserId(int userId) {
@@ -69,6 +86,15 @@ public class CartDao {
 		@SuppressWarnings("unchecked")
 		List<ChiTietGioHang> gioHangList = q.list();
 		return gioHangList;
+	}
+	
+	public int getTotalCart(int id) {
+		Session s = factory.getCurrentSession();
+		String hql = "select COUNT(*) FROM ChiTietGioHang where UserID = " + id ;
+		Query query = s.createQuery(hql);
+	    
+	    Long count = (Long) query.uniqueResult();
+	    return count != null ? count.intValue() : 0;
 	}
 	
 	public HashMap<Integer, CartDto> addCart(int id, HashMap<Integer, CartDto> cart, String authorName) {
@@ -121,12 +147,13 @@ public class CartDao {
 		return cart;
 	}
 	
-	public double totalPrice(HashMap<Integer, CartDto> cart ) {
+	public double totalPrice(int id) {
 		double total = 0;
-		for(Map.Entry<Integer, CartDto> itemCart : cart.entrySet()) {
-			total += itemCart.getValue().getTotalPrice(); 
+	    List<ChiTietGioHang> ctgh = getDataCartByUserId(id); 
+		for (int i = 0; i < ctgh.size(); i++) {
+			ChiTietGioHang tmp = ctgh.get(i);
+			total += tmp.getGiaBan();
 		}
-		
 		return total;
 	}
 }

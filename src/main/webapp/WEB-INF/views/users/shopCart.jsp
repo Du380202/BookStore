@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>  
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -82,8 +84,15 @@
 		    margin: 0;
 		    width: 35px;
 		}
-        
-	
+    
+		
+		.cart_table .shopping-product {
+		    display: inline-block;
+		    height: 70px;
+		    margin-right: 10px;
+		}
+		
+		
 	    
 	</style>
 </head>
@@ -355,6 +364,7 @@
                         <table class="table table-bordered border-radius">
                             <thead>
                             <tr>
+                            	<th class="darkcolor">Image</th>
                                 <th class="darkcolor">Product</th>
                                 <th class="darkcolor">Price</th>
                                 <th class="darkcolor">Quantity</th>
@@ -366,16 +376,18 @@
                             <c:forEach var="item" items="${cartView}">
                             	
                             <tr>
+                            	<td>
+                                    
+                                      <div class="col-12 col-lg-2 product-detail-cart-image">
+                                           <a class="shopping-product" href=""><img src="<c:url value="${item.getImg1()}"/>" alt="Generic placeholder image"></a>
+                                       </div>
+
+                                </td>
                                 <td>
                                     <div class="d-table product-detail-cart">
 
                                         <div class="media">
                                             <div class="row no-gutters">
-
-                                                <div class="col-12 col-lg-2 product-detail-cart-image">
-                                                    <a class="shopping-product" href=""><img src="<c:url value="${item.getImg1()}"/>" alt="Generic placeholder image"></a>
-                                                </div>
-
                                                 <div class="col-12 col-lg-10 mt-auto product-detail-cart-data">
                                                     <div class="media-body ml-lg-3">
                                                         <h4 class="product-name "><a href="product-detail.html"> ${item.getTieuDe()}</a></h4>
@@ -410,17 +422,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="apply_coupon">
-                        <div class="row">
-                            <div class="col-12 text-left">
-                                <a href="shop-cart.html" class="btn yellow-color-green-gradient-btn">UPDATE</a>
-                                <a href="shop-cart.html" class="btn green-color-yellow-gradient-btn ">CHECKOUT</a>
-                            </div>
-<!--                            <div class="col-6  coupon text-left">-->
-<!--                                <a href="shop-cart.html" class="btn pink-color-black-gradient-btn ">CHECKOUT</a>-->
-<!--                            </div>-->
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
             <!-- END SHOP CART TABLE -->
@@ -429,71 +431,39 @@
             <div class="row pt-5">
                 <div class="col-12 col-lg-6 wow slideInLeft" data-wow-duration="2s">
                     <div class="calculate-shipping">
-                        <h4 class="heading">Calculate Shipping</h4>
-                        <form>
+                        <h4 class="heading">Place Order</h4>
+                        <form:form action="PlaceOrder" modelAttribute="donhang">
+                        <div class="form-group">
+                                <form:input class="form-control" placeholder="Phone Number" path="sdt"/>
+                            </div>
+                           <div class="form-group">
+                                <form:input class="form-control" placeholder="Address" path="diaChi"/>
+                            </div>
                             <div class="form-group">
                                 <label class="select form-control">
                                     <select name="country" id="states">
-                                        <option>USA</option>
-                                        <option>Canada</option>
-                                        <option>Chile</option>
-                                        <option>France</option>
+                                        <option>Payment Method</option>
+                                        <option>Thanh toán khi nhận hàng</option>
+                                        <option>Thanh toán ngay</option>
                                     </select>
                                 </label>
                             </div>
-                            <div class="form-group">
-                                <label class="select form-control">
-                                    <select name="country" id="state">
-                                        <option>USA</option>
-                                        <option>Canada</option>
-                                        <option>Chile</option>
-                                        <option>France</option>
-                                    </select>
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Postal/Zip Code">
-                            </div>
-                            <a href="#" class="btn yellow-color-green-gradient-btn">Calculate</a>
-                        </form>
+                           
+                       
+	                          <button class="btn green-color-yellow-gradient-btn user-contact contact_btn"  type="submit">
+	                          	PAYMENT
+	                         </button>
+	              
+                        </form:form>
                     </div>
                 </div>
                 <div class="col-12 col-lg-6 wow slideInRight" data-wow-duration="2s">
                     <div class="card-total">
-                        <h4 class="heading">Card Total</h4>
+                        <h4 class="heading">Total Price</h4>
                         <table>
                             <tr>
-                                <td>Subtotal</td>
-                                <td>$251.00</td>
-                            </tr>
-                            <tr>
-                                <td>Shipping</td>
-                                <td>
-                                    <ul class="color-grey">
-                                        <li>
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="flat-rate" name="shipping" class="custom-control-input" checked="">
-                                                <label class="custom-control-label" for="flat-rate">Flat Rate : $49.00</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="free-shipping" name="shipping" class="custom-control-input">
-                                                <label class="custom-control-label" for="free-shipping">Free Shipping</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="cod-shipping" name="shipping" class="custom-control-input">
-                                                <label class="custom-control-label" for="cod-shipping">Cash on Delivery</label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
                                 <td>Total</td>
-                                <td>$300.00</td>
+                                <td>$${TotalPrice}</td>
                             </tr>
                         </table>
                     </div>

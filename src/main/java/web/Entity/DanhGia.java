@@ -19,8 +19,8 @@ public class DanhGia {
 	private String thoiGian;
 	@Column(name = "DanhGiaSP")
 	private int danhGiaSP;
-	@Column(name = "UserName")
-	private Integer UserName;
+	@Column(name = "UserID")
+	private Integer userId;
 	@Column(name = "IDSach")
 	private Integer idSach;
 	public String getIdDanhGia() {
@@ -47,11 +47,12 @@ public class DanhGia {
 	public void setDanhGiaSP(int danhGiaSP) {
 		this.danhGiaSP = danhGiaSP;
 	}
-	public Integer getUserID() {
-		return UserName;
+
+	public Integer getUserId() {
+		return userId;
 	}
-	public void setUserID(Integer userID) {
-		this.UserName = userID;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 	public Integer getIdSach() {
 		return idSach;

@@ -45,11 +45,12 @@ public class UserController {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
 		Users user = (Users) s.getAttribute("loggedInUser");
-		System.out.println(editUser.getAvatar());
-		System.out.println(editUser.getHoTen());
-		System.out.println(editUser.getDiaChi());
 		try {
 			user.setDiaChi(editUser.getDiaChi());
+			user.setEmail(editUser.getEmail());
+			user.setHoTen(editUser.getHoTen());
+			user.setNgaySinh(editUser.getNgaySinh());
+			user.setsDT(editUser.getsDT());
 			session.update(user);
 			t.commit();
 			model.addAttribute("messageE","Lưu thành công!");
@@ -62,6 +63,7 @@ public class UserController {
 		finally {
 			session.close();
 		}
+		model.addAttribute("account", accountDao.getDataById(user.getMaKH()));
 		return "users/account";
 	}
 	

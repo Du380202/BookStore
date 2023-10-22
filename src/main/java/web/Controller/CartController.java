@@ -1,7 +1,10 @@
 package web.Controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,10 +16,14 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import web.Entity.*;
+
 import web.Dao.*;
 import web.Dto.CartDto;
 import web.Dto.ChiTietGioHangDTO;
@@ -45,8 +52,38 @@ public class CartController {
 		Users user = (Users) session.getAttribute("loggedInUser");
 		model.addAttribute("categories", categoryDao.getDataCategory());
 		model.addAttribute("author", authorDao.getDataAuthor());
+		model.addAttribute("donhang", new DonHang());
 		model.addAttribute("cartView", cartDao.getCartByUser(user.getMaKH()));
+		model.addAttribute("TotalPrice", cartDao.totalPrice(user.getMaKH()));
 		return "users/shopCart";
+	}
+	
+	@RequestMapping(value="PlaceOrder", method = RequestMethod.POST)
+	public String saveOrder(ModelMap model, @ModelAttribute("donhang") DonHang order, HttpSession session) {
+		Session s = factory.openSession();
+		Transaction t = s.beginTransaction();
+		Users user = (Users) session.getAttribute("loggedInUser");
+		int total = cartDao.getTotalCart(user.getMaKH());
+		List<ChiTietGioHang> list = cartDao.getDataCartByUserId(user.getMaKH());
+		try {
+			order.setNgayDat("" + java.time.LocalDate.now());
+			order.setTongTien(cartDao.totalPrice(user.getMaKH()));
+			order.setUserId(user.getMaKH());
+			for (int i = 0; i < total; i++) {
+				cartDao.delete(list.get(i));
+			}
+			s.save(order);
+			t.commit();		
+			
+			
+		}
+		catch (Exception e) {
+			t.rollback();
+		}
+		finally {
+			s.close();
+		}
+	    return "users/shopCart";
 	}
 	
 	@RequestMapping (value="AddCart/{id}")
@@ -60,8 +97,6 @@ public class CartController {
 		}
 		String authorName = authorDao.getDataById(productDao.getProductByID(id).getMaTacGia()).getTenTG();
 		cart = cartDao.addCart(id, cart, authorName); 
-		session.setAttribute("Cart", cart);
-		session.setAttribute("TotalPrice", cartDao.totalPrice(cart));
 		CartDto product = cart.get(id);
 		List<ChiTietGioHangDTO> x = cartDao.getCartByUser(user.getMaKH());
 		Session s = factory.openSession();
@@ -116,7 +151,7 @@ public class CartController {
 		String authorName = authorDao.getDataById(productDao.getProductByID(productId).getMaTacGia()).getTenTG();
 		cart = cartDao.addCart(productId, cart, authorName); 
 		session.setAttribute("Cart", cart);
-		session.setAttribute("TotalPrice", cartDao.totalPrice(cart));
+		session.setAttribute("TotalPrice", cartDao.totalPrice(user.getMaKH()));
 		Session s = factory.openSession();
 		Transaction t = s.beginTransaction();
 		
@@ -164,7 +199,7 @@ public class CartController {
 		}
 		
 		session.setAttribute("Cart", cart);
-		session.setAttribute("TotalPrice", cartDao.totalPrice(cart));
+		session.setAttribute("TotalPrice", cartDao.totalPrice(user.getMaKH()));
 		return "redirect:" + request.getHeader("Referer");
 	}
 }

@@ -362,8 +362,7 @@
                         href="#account-general"><i class="ti-user"></i>General</a>
                     <a class="list-group-item list-group-item-action" data-toggle="list"
                         href="#account-change-password"><i class="ti-settings"></i>Change password</a>
-                    <a class="list-group-item list-group-item-action" data-toggle="list"
-                        href="#account-info"><i class="ti-hand-point-right"></i>Info</a>
+                   
                     <a class="list-group-item list-group-item-action" data-toggle="list"
                         href="#account-social-links"><i class="ti-link"></i>Social links</a>
                         <!-- Order -->
@@ -373,8 +372,8 @@
             </div>
             <div class="col-md-9">
                 <div class="tab-content">
-                <form:form action="userAccount"  modelAttribute="account">
                     <div class="tab-pane fade active show" id="account-general">
+                		<form:form action="userAccount"  modelAttribute="account">
                         <div class="card-body media align-items-center">
                             <img class="avatar" style="width: 70px !important; height: 70px !important" src="<c:url value="${account.getAvatar()}"/>" alt
                                 class="d-block ui-w-80">
@@ -411,14 +410,14 @@
                                 <form:input path="diaChi" type="text" class="form-control" value="${account.getDiaChi()}"/>
                             </div>
                         </div>
+	                    <div class="col-12">
+	                          <a href="signin" style="display: flex; justify-content: flex-end">
+	                          <button class="btn green-color-yellow-gradient-btn user-contact contact_btn"  type="submit">SAVE
+	                         </button>
+	                         </a>
+	                    </div>
+	                    </form:form>
                     </div>
-                    <div class="col-12">
-                          <a href="signin">
-                          <button class="btn green-color-yellow-gradient-btn user-contact contact_btn" type="submit">LOGIN
-                         </button>
-                         </a>
-                    </div>
-                    </form:form>
                     <div class="tab-pane fade" id="account-change-password">
                         <div class="card-body pb-2">
                             <div class="form-group">
@@ -434,37 +433,14 @@
                                 <input type="password" class="form-control">
                             </div>
                         </div>
+                        <div class="col-12">
+	                          <a href="signin" style="display: flex; justify-content: flex-end">
+	                          <button class="btn green-color-yellow-gradient-btn user-contact contact_btn"  type="submit">SAVE
+	                         </button>
+	                         </a>
+	                    </div>
                     </div>
-                    <div class="tab-pane fade" id="account-info">
-                        <div class="card-body pb-2">
-                            <div class="form-group">
-                                <label class="form-label">Birthday</label>
-                                <input type="text" class="form-control" value="May 3, 1995">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Country</label>
-                                <select class="custom-select">
-                                    <option>USA</option>
-                                    <option selected>VietNam</option>
-                                    <option>UK</option>
-                                    <option>Germany</option>
-                                    <option>France</option>
-                                </select>
-                            </div>
-                        </div>
-                        <hr class="border-light m-0">
-                        <div class="card-body pb-2">
-                            <h6 class="mb-4">Contacts</h6>
-                            <div class="form-group">
-                                <label class="form-label">Phone</label>
-                                <input type="text" class="form-control" value="+0 (123) 456 7891">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Website</label>
-                                <input type="text" class="form-control" value>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <div class="tab-pane fade" id="account-social-links">
                         <div class="card-body pb-2">
                             <div class="form-group">
@@ -488,6 +464,12 @@
                                 <input type="text" class="form-control" value="https://www.instagram.com/user">
                             </div>
                         </div>
+                        <div class="col-12">
+	                          <a href="signin" style="display: flex; justify-content: flex-end">
+	                          <button class="btn green-color-yellow-gradient-btn user-contact contact_btn"  type="submit">SAVE
+	                         </button>
+	                         </a>
+	                    </div>
                     </div>
                     <!-- Order -->
                     <div class="tab-pane fade" id="account-order">
@@ -501,6 +483,12 @@
                             <li><a href=""><i class="ti-face-sad"></i>Đã hủy</a></li>
                           </ul>
                         </div>
+                        <div class="col-12">
+	                          <a href="signin" style="display: flex; justify-content: flex-end">
+	                          <button class="btn green-color-yellow-gradient-btn user-contact contact_btn"  type="submit">SAVE
+	                         </button>
+	                         </a>
+	                    </div>
                     </div>
 
 
@@ -607,10 +595,7 @@
             </div>
         </div>
     </div>
-    <div class="text-right mt-3">
-        <button type="button" class="btn btn-primary">Save changes</button>&nbsp;
-        <button type="button" class="btn btn-default">Cancel</button>
-    </div>
+  
 </div>
 <!-- END HEADING SECTION -->
 

@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import web.Dao.AuthorDao;
-import web.Dao.CategoryDao;
-import web.Dao.NXBDao;
-import web.Dao.ProductDao;
+import web.Dao.*;
 import web.Entity.*;
 
 @Controller
@@ -28,6 +25,9 @@ public class AdminController {
 	private ProductDao proDao;
 	@Autowired
 	private CategoryDao caDao;
+	
+	@Autowired
+	private OrderDao orderDao;
 	
 	@Autowired
 	private NXBDao nxbDao;
@@ -54,6 +54,12 @@ public class AdminController {
 	public String addNewProduct(ModelMap model, @ModelAttribute("sach") Sach sach) {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
+		System.out.println(sach.getMoTa());
+		System.out.println(sach.getTenSach());
+		System.out.println(sach.getMaTacGia());
+		System.out.println(sach.getSoLuongTon());
+		System.out.println(sach.getAnh1());
+		System.out.println(sach.getGiaBan());
 		try {
 				session.save(sach);
 				t.commit();
@@ -61,7 +67,7 @@ public class AdminController {
 		}
 		catch (Exception e) {
 			t.rollback();
-			model.addAttribute("messageAddP", "Thêm sản phẩm thất bại");
+			model.addAttribute("messageAddP", "Thêm sản phẩm thất bại" + e);
 		}
 		finally {
 			session.close();
@@ -77,7 +83,7 @@ public class AdminController {
 	
 	@RequestMapping(value = {"indexAdmin"})
 	public String indexAdmin(ModelMap model) {
-		
+		model.addAttribute("orders", orderDao.getDataOrder());
 		return "admin/index";
 	}
 	

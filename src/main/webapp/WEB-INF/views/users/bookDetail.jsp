@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>  
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +40,7 @@
     <link rel="stylesheet" href="<c:url value="/ASSETS/css/style.css"/>">
     <!-- Custom Css  -->
     <link rel="stylesheet" href="<c:url value="/ASSETS/css/custom.css"/>">
-<style>
+	<style>
 		.col-lg-3 {
 	        -ms-flex: 0 0 33%;
 	        flex: 0 0 33%;
@@ -65,6 +67,16 @@
             border: 2px solid #fff; 
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
         }
+        
+        .avatar-comment {
+        	width: 60px !important ;
+            height: 60px !important ; 
+            border-radius: 50% !important; 
+            object-fit: cover; 
+            border: 2px solid #fff; 
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        	
+        }
 
 
         .dropdown-menu {
@@ -75,6 +87,35 @@
         .avatar-wrapper:hover .dropdown-menu {
             display: block;
         }
+        
+        .user-rating-select {
+        	display: flex;
+        	
+        }
+        
+        .user-rating-select li a i {
+		    color: #999; /* Màu mặc định của ngôi sao */
+		    margin: 5px;
+		        
+		}
+		
+		.user-rating-select li a i:hover {
+		    color: gold; /* Màu khi bạn trỏ chuột vào */
+		}
+				
+		.media-auto {
+	        display: -ms-flexbox;
+	        /* display: flex; */
+	        -ms-flex-align: start;
+	        align-items: flex-start
+	    }
+	    .tab-content .reviews .media-auto .user-rating li a {
+	        color: #f5c136;
+	    }
+	    
+	    .tab-content .reviews .media-auto {
+		    margin-bottom: 15px;
+		}
 	</style>
 </head>
 
@@ -456,11 +497,7 @@
 
                             <div class="row product-quantity input_plus_mins no-gutters">
 
-                                <div class="qty col-12 col-lgrr-3 d-lg-flex  align-items-lg-center d-inline-block">
-                                    <span class="minus bg-dark"><i class="lni-minus"></i></span>
-                                    <input type="number" class="count" name="qty" value="1">
-                                    <span class="plus bg-dark"><i class="lni-plus"></i></span>
-                                </div>
+                                
                                 <div class="col-12 col-lg-9">
                                     <a href="<c:url value="/AddCart/${productDetail.getMaSach()}"/>"><button class="btn green-color-yellow-gradient-btn">ADD TO CART</button></a>
                                 </div>
@@ -552,14 +589,14 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane fade reviews" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-
-                                        <div class="media">
+										<c:forEach var="item" items="${comments}">
+                                        <div class="media-auto">
                                             <div class="row no-gutter">
                                                 <div class="col-12 col-lg-2 p-0">
-
+													
                                                     <div class="row no-gutters">
                                                         <div class="col-12 d-flex  justify-content-center">
-                                                            <img src="<c:url value="ASSETS/img/user.jpg"/>" alt="Generic placeholder image">
+                                                            <img class="avatar-comment" src="<c:url value="${item.getAvatar()}"/>" alt="Generic placeholder image">
                                                         </div>
                                                         <div class="col-12 d-flex mt-2 justify-content-center">
                                                             <ul class="user-rating">
@@ -575,16 +612,16 @@
                                                 </div>
 
                                                 <div class="col-12 col-lg-10 p-0">
-                                                    <div class="media-body">
-                                                        <span class="text-center text-lg-left d-block">27 Aug 2017</span>
-                                                        <h5 class="mb-2 text-center text-lg-left">Media heading</h5>
-                                                        <p class="text-center text-lg-left">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam.</p>
+                                                    <div class="media-body" style="padding: 0px 25px;  border-left: 1px solid #eceff6;">
+                                                        <span class="text-center text-lg-left d-block">${item.getNgay() }</span>
+                                                        <h5 class="mb-2 text-center text-lg-left">${item.getUserName() }</h5>
+                                                        <p class="text-center text-lg-left">${item.getNoiDung()}</p>
                                                     </div>
                                                 </div>
 
                                             </div>
                                         </div>
-                                        
+                                        </c:forEach>
 
                                         <div class="row pl-2 pr-2">
                                             <div class="col-12 d-flex mb-4 mt-3">
@@ -592,45 +629,35 @@
                                                 <hr class="w-100 ml-5">
                                             </div>
                                             <div class="col-12">
-                                                <form class="getin_form border-form" id="register">
+                                                <form:form action="detail/${productDetail.getMaSach()}" modelAttribute="comment" class="getin_form border-form">
                                                     <div class="row">
-                                                        <div class="col-md-6 col-sm-12">
-                                                            <div class="form-group bottom35">
-                                                                <input type="text" class="form-control" placeholder="Name*" required="" id="registerName">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-12">
-                                                            <div class="form-group bottom35">
-                                                                <input type="email" class="form-control" placeholder="Email*" required="" id="registerEmail">
-                                                            </div>
-                                                        </div>
                                                         <div class="col-12 col-lg-2 text-center text-lg-left">
                                                             <h5 class="text-nowrap">Your Rating</h5>
                                                         </div>
                                                         <div class="col-12 col-lg-10 text-center text-lg-left">
-                                                            <ul class="user-rating">
-                                                                <li><a href="#"><i class="lni-star-filled"></i></a></li>
-                                                                <li><a href="#"><i class="lni-star-filled"></i></a></li>
-                                                                <li><a href="#"><i class="lni-star-filled"></i></a></li>
-                                                                <li><a href="#"><i class="lni-star-filled"></i></a></li>
-                                                                <li><a href="#"><i class="lni-star"></i></a></li>
-                                                            </ul>
-                                                        </div>
+														    <ul class="user-rating-select">
+														        <li><a href="" id="star1"><i class="lni-star"></i></a></li>
+														        <li><a href="" id="star2"><i class="lni-star"></i></a></li>
+														        <li><a href="" id="star3"><i class="lni-star"></i></a></li>
+														        <li><a href="#" id="star4"><i class="lni-star"></i></a></li>
+														        <li><a href="#" id="star5"><i class="lni-star"></i></a></li>
+														    </ul>
+														</div>
+
                                                         <div class="col-12">
                                                             <div class="form-group">
-                                                                <!--                                                                            <label for="comment">Your Rating:</label>-->
-                                                                <textarea class="form-control textareaclass" rows="5" id="comment" placeholder="Your Review"></textarea>
+                                                                <form:textarea path="noiDung" class="form-control textareaclass" rows="5" id="comment" placeholder="Your Review"></form:textarea>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-12 mt-3">
                                                             <div class="form-group d-flex justify-content-center d-lg-block">
-                                                                <button class="text-center btn green-color-yellow-gradient-btn">Add Review</button>
+                                                                <button type="submit" class="text-center btn green-color-yellow-gradient-btn">Add Review</button>
                                                             </div>
                                                         </div>
 
                                                     </div>
-                                                </form>
+                                                </form:form>
                                             </div>
                                         </div>
 
@@ -1155,7 +1182,65 @@
 <script src="<c:url value="/ASSETS/vendor/js/extensions/revolution.extension.parallax.min.js"/>"></script>
 <script src="<c:url value="/ASSETS/vendor/js/extensions/revolution.extension.slideanims.min.js"/>"></script>
 <script src="<c:url value="/ASSETS/vendor/js/extensions/revolution.extension.video.min.js"/>"></script>
+<!-- <script>
+//JavaScript code
+const stars = document.querySelectorAll('.user-rating li');
+let rating = 0;
 
+stars.forEach(star => {
+    star.addEventListener('click', () => {
+        rating = stars.indexOf(star) + 1; // Lấy vị trí của ngôi sao và cộng thêm 1 để có giá trị rating
+        for (let i = 0; i < stars.length; i++) {
+            if (i < rating) {
+                stars[i].classList.add('selected');
+            } else {
+                stars[i].classList.remove('selected');
+            }
+        }
+        console.log('Rating: ' + rating); // In ra giá trị rating trong console
+    });
+});
+
+</script> -->
+
+<script>
+const stars = document.querySelectorAll('.user-rating-select li a i');
+let currentRating = 0;
+let isRated = false; // Biến cờ kiểm tra đã đánh giá hay chưa
+let ratingCount = 0; // Số lượng đánh giá
+stars.forEach((star, index) => {
+    star.addEventListener('click', () => {
+        if (!isRated) {
+            currentRating = index + 1;
+            isRated = true; // Đã đánh giá xong
+            for (let i = 0; i <= index; i++) {
+                stars[i].style.color = 'gold';
+            }
+            ratingCount++; // Tăng số lượng đánh giá
+            updateRatingCount(); // Cập nhật số lượng đánh giá trên view
+
+            // Sử dụng AJAX để gửi số lượng đánh giá lên controller
+            sendRatingToController(ratingCount);
+        }
+    });
+
+    star.addEventListener('mouseenter', () => {
+        if (!isRated) {
+            for (let i = 0; i <= index; i++) {
+                stars[i].style.color = 'gold';
+            }
+        }
+    });
+
+    star.addEventListener('mouseleave', () => {
+        if (!isRated) {
+            for (let i = 0; i <= index; i++) {
+                stars[i].style.color = '#999';
+            }
+        }
+    });
+});
+</script>
 <!-- Custom Script -->
 <script src="<c:url value="/ASSETS/js/script.js"/>"></script>
 </body>

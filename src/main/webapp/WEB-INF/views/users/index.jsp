@@ -461,7 +461,7 @@
 			            </div>
 			            <div class="row">
 			                <div class="col-12 text-center">
-			                    <div class="cbp-l-grid-blog-title"><a href="detail?id=${item.getMaSach()}" target="_blank" class="portfolio-title">${item.getTenSach()}</a></div>
+			                    <div class="cbp-l-grid-blog-title"><a href="detail?id=${item.getMaSach()}"  class="portfolio-title">${item.getTenSach()}</a></div>
 			                </div>
 			                <div class="col-12 text-center">
 			                    <div class="cbp-l-grid-blog-desc portfolio-des">$${item.getGiaBan()}0</div>
