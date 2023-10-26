@@ -75,7 +75,7 @@ public class LoginController {
 	@RequestMapping(value="/logout", method=RequestMethod.GET) 
 	public String logout(HttpServletRequest request, HttpSession session) {
 	    session.removeAttribute("loggedInUser");
-	    return "redirect:" + request.getHeader("Referer");
+	    return "redirect:/home";
 	}
 	
 }

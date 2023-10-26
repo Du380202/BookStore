@@ -1,6 +1,5 @@
 package web.Controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +44,9 @@ public class CartController {
 	@Autowired
 	private ProductDao productDao;
 	
+	@Autowired
+	private OrderDao orderDao;
+	
 	LoginController user;
 	
 	@RequestMapping(value= "shopCart")
@@ -69,11 +71,21 @@ public class CartController {
 			order.setNgayDat("" + java.time.LocalDate.now());
 			order.setTongTien(cartDao.totalPrice(user.getMaKH()));
 			order.setUserId(user.getMaKH());
-			for (int i = 0; i < total; i++) {
-				cartDao.delete(list.get(i));
-			}
+			
 			s.save(order);
-			t.commit();		
+			t.commit();	
+			for (int i = 0; i < total; i++) {
+				ChiTietDonHang ctdh = new ChiTietDonHang();
+				Sach sach = productDao.getProductByID(list.get(i).getIdSach());
+				ctdh.setiDDonHang(orderDao.getDataEndOrder().getIdDonHang());
+				ctdh.setIdSach(list.get(i).getIdSach());
+				ctdh.setSoLuong(list.get(i).getSoLuong());
+				ctdh.setGiaBan(list.get(i).getGiaBan());
+				sach.setSoLuongTon(sach.getSoLuongTon() - list.get(i).getSoLuong());
+				orderDao.save(ctdh);
+				cartDao.delete(list.get(i));
+				productDao.updateProduct(sach);
+			}
 			
 			
 		}

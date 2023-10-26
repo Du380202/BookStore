@@ -49,6 +49,10 @@ public class ProductController {
 		model.addAttribute("productDetail", product.getProductByID(id));
 		model.addAttribute("comments", product.getCommentByProductId(id));
 		model.addAttribute("comment", new DanhGia());
+		model.addAttribute("categories", categoryDao.getDataCategory());
+        model.addAttribute("author", authorDao.getDataAuthor());
+        List<Sach> products = product.getDataProduct();
+        model.addAttribute("productNew", products);
 		return "users/bookDetail";
 	}
 
@@ -87,6 +91,43 @@ public class ProductController {
 	    int totalPage;
 	    products = product.getDataProductpagin(currentPage, pageSize, startRow);
 	    int totalProduct = product.getTotalProduct();
+	    totalPage = (int) Math.ceil((double) totalProduct / pageSize);
+		model.addAttribute("categories", categoryDao.getDataCategory());
+		model.addAttribute("author", authorDao.getDataAuthor());
+		model.addAttribute("totalPage", totalPage);
+	    model.addAttribute("currentPage", currentPage);
+	    model.addAttribute("products", products);
+		return "users/bookList";
+	}
+	
+	@RequestMapping(value="listCategory")
+	public String productByCategory(ModelMap model, @RequestParam("id") int id, @RequestParam(defaultValue = "1") int currentPage) {
+		int pageSize = 9;
+	    int startRow = (currentPage - 1) * pageSize;
+
+	    List<Sach> products;
+	    int totalPage;
+	    products = product.getDataProductByCa(currentPage, pageSize, startRow, id);
+	    int totalProduct = product.getTotalProductCategory(id);
+
+	    totalPage = (int) Math.ceil((double) totalProduct / pageSize);
+		model.addAttribute("categories", categoryDao.getDataCategory());
+		model.addAttribute("author", authorDao.getDataAuthor());
+		model.addAttribute("totalPage", totalPage);
+	    model.addAttribute("currentPage", currentPage);
+	    model.addAttribute("products", products);
+		return "users/bookList";
+	}
+	
+	@RequestMapping(value="listAuthor")
+	public String productByAuthor(ModelMap model, @RequestParam("id") int id, @RequestParam(defaultValue = "1") int currentPage) {
+		int pageSize = 9;
+	    int startRow = (currentPage - 1) * pageSize;
+
+	    List<Sach> products;
+	    int totalPage;
+	    products = product.getDataProductByAuthor(currentPage, pageSize, startRow, id);
+	    int totalProduct = product.getTotalProductAuthor(id);
 
 	    totalPage = (int) Math.ceil((double) totalProduct / pageSize);
 		model.addAttribute("categories", categoryDao.getDataCategory());

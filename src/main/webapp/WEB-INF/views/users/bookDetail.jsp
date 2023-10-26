@@ -170,7 +170,7 @@
                                                             <h5 class="dropdown-title"> Categories </h5>
                                                             <ul>
 	                                                            <c:forEach var="item" items="${categories}">
-	                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="#">${item.getTenTheLoai()}</a></li>
+	                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="listCategory?id=${item.getIdTheLoai()}">${item.getTenTheLoai()}</a></li>
 	                                                              </c:forEach>
                                                             </ul>
 
@@ -184,7 +184,7 @@
 	                                                                    <img class="align-self-start" src="<c:url value="${item.getImg()}"/>" alt="Generic placeholder image">
 	                                                                </div>
 	                                                                <div class="media-body">
-	                                                                    <h6 class="mt-3 ml-3"><a href="#">${item.getTenTG()}</a></h6>
+	                                                                    <h6 class="mt-3 ml-3"><a href="listAuthor?id=${item.getMaTG()}">${item.getTenTG()}</a></h6>
 	                                                                </div>
 	                                                            </div>
 															</c:forEach>
@@ -209,9 +209,13 @@
                                                     <li><i class="lni-angle-double-right right-arrow"></i><a
                                                             class="dropdown-item" href="list">Detail
                                                             Page</a></li>
-                                                    <li><i class="lni-angle-double-right right-arrow"></i><a
-                                                            class="dropdown-item" href="list">ShopCart
-                                                            Page</a></li>
+                                                     <c:if test="${empty loggedInUser}">
+		                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="signin">ShopCart Page</a></li>
+		                                             </c:if>
+		                                             
+		                                             <c:if test="${not empty loggedInUser}">
+		                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="shopCart">ShopCart Page</a></li>
+		                                             </c:if>
                                                 </ul>
                                             </div>
                                         </li>
@@ -383,7 +387,7 @@
                                     </a>
                                 </li>
                                 <li class="d-inline-block mini-menu-card">
-                                    <a class="nav-link" id="add_cart_box" href="javascript:void(0)">
+                                    <a class="nav-link" href="shopCart">
                                         <i class="lni lni-shopping-basket"></i>
                                     </a>
                                 </li>
@@ -497,12 +501,19 @@
 
                             <div class="row product-quantity input_plus_mins no-gutters">
 
-                                
+                             <c:if test="${productDetail.getSoLuongTon() > 0}">
                                 <div class="col-12 col-lg-9">
                                     <a href="<c:url value="/AddCart/${productDetail.getMaSach()}"/>"><button class="btn green-color-yellow-gradient-btn">ADD TO CART</button></a>
                                 </div>
+                            </c:if>
+                            
+                             <c:if test="${productDetail.getSoLuongTon() == 0}">
+                                <div class="col-12 col-lg-9">
+                                    <a href="javascript:void(0)"/><button class="btn green-color-yellow-gradient-btn">OUT OF STOCK</button></a>
+                                </div>
+                            </c:if>
                             </div>
-
+								
 
                             <div class="dropdown-divider"></div>
 
@@ -685,185 +696,32 @@
                 </div>
 
                 <div class="col-12">
-                    <div class="lastest_featured_products owl-carousel owl-theme">
-
-                        <div class="lastest_arrival_items item">
-                            <a href="product-detail.html" class="lastest-addto-cart"><i class="fa fa-shopping-cart"></i></a>
-                            <div class="card">
-                                <span class="product-type">NEW</span>
-                                <div class="image-holder">
-                                    <a href="<c:url value="ASSETS/img/l1.jpg"/>" data-fancybox="lastest_product" data-title="Shirt Name">
-                                        <img src="<c:url value="ASSETS/img/l1.jpg"/>" class="card-img-top" alt="Lastest Arrivals 1">
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-12 text-center">
-                                            <h5 class="card-title">Love In The Time</h5>
-                                        </div>
-                                        <div class="col-12 text-center">
-                                            <p class="card-text"> $750.00</p>
-                                        </div>
+                <div class="lastest_featured_products owl-carousel owl-theme">
+					<c:forEach var = "item" items = "${productNew}">
+                    <div class="lastest_arrival_items item">
+                        <a href="<c:url value="/AddCart/${item.getMaSach()}"/>" class="lastest-addto-cart"><i class="fa fa-shopping-cart"></i></a>
+                        <div class="card">
+                            <span class="product-type">NEW</span>
+                            <div class="image-holder">
+                                <a href="<c:url value="${item.getAnh1()}"/>" data-fancybox="lastest_product" data-title="Shirt Name">
+                                    <img src="<c:url value="${item.getAnh1()}"/>" class="card-img-top" alt="Lastest Arrivals 1">
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <h5 class="card-title"><a href="detail?id=${item.getMaSach()}">${item.getTenSach()}</a></h5>
+                                    </div>
+                                    <div class="col-12 text-center">
+                                        <p class="card-text"> $${item.getGiaBan()}0</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="lastest_arrival_items item">
-                            <a href="product-detail.html" class="lastest-addto-cart"><i class="fa fa-shopping-cart"></i></a>
-                            <div class="card">  <span class="product-type">NEW</span>
-                                <div class="image-holder">
-                                    <a href="<c:url value="ASSETS/img/l7.jpg"/>" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
-                                        <img src="<c:url value="ASSETS/img/l7.jpg"/>" class="card-img-top" alt="Lastest Arrivals 1">
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-12 text-center">
-                                            <h5 class="card-title">The Joke</h5>
-                                        </div>
-                                        <div class="col-12 text-center">
-                                            <p class="card-text text-center"> $850.00</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="lastest_arrival_items item">
-                            <a href="product-detail.html" class="lastest-addto-cart"><i class="fa fa-shopping-cart"></i></a>
-                            <div class="card">
-                                <span class="product-type">NEW</span>
-                                <div class="image-holder">
-                                    <a href="<c:url value="ASSETS/img/l8.jpg"/>" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
-                                        <img src="<c:url value="ASSETS/img/l8.jpg"/>" class="card-img-top" alt="Lastest Arrivals 1">
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-12 text-center">
-                                            <h5 class="card-title">Never Let Me Go </h5>
-                                        </div>
-                                        <div class="col-12 text-center">
-                                            <p class="card-text text-center"> $650.00</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="lastest_arrival_items item">
-                            <a href="product-detail.html" class="lastest-addto-cart"><i class="fa fa-shopping-cart"></i></a>
-                            <div class="card">
-                                <span class="product-type">NEW</span>
-                                <div class="image-holder">
-                                    <a href="<c:url value="ASSETS/img/l9.jpg"/>" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
-                                        <img src="<c:url value="ASSETS/img/l9.jpg"/>" class="card-img-top" alt="Lastest Arrivals 1">
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-12 text-center">
-                                            <h5 class="card-title"> The Last World</h5>
-                                        </div>
-                                        <div class="col-12 text-center">
-                                            <p class="card-text text-center"> $680.00</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="lastest_arrival_items item">
-                            <a href="product-detail.html" class="lastest-addto-cart"><i class="fa fa-shopping-cart"></i></a>
-                            <div class="card">
-                                <span class="product-type">NEW</span>
-                                <div class="image-holder">
-                                    <a href="<c:url value="ASSETS/img/l10.jpg"/>" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
-                                        <img src="<c:url value="ASSETS/img/l10.jpg"/>" class="card-img-top" alt="Lastest Arrivals 1">
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-12 text-center">
-                                            <h5 class="card-title">Brave New World</h5>
-                                        </div>
-                                        <div class="col-12 text-center">
-                                            <p class="card-text text-center"> $250.00</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="lastest_arrival_items item">
-                            <a href="product-detail.html" class="lastest-addto-cart"><i class="fa fa-shopping-cart"></i></a>
-                            <div class="card">
-                                <span class="product-type">NEW</span>
-                                <div class="image-holder">
-                                    <a href="<c:url value="ASSETS/img/l11.jpg"/>" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
-                                        <img src="<c:url value="ASSETS/img/l11.jpg"/>" class="card-img-top" alt="Lastest Arrivals 1">
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-12 text-center">
-                                            <h5 class="card-title">Life Without Money</h5>
-                                        </div>
-                                        <div class="col-12 text-center">
-                                            <p class="card-text text-center"> $850.00</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="lastest_arrival_items item">
-                            <a href="product-detail.html" class="lastest-addto-cart"><i class="fa fa-shopping-cart"></i></a>
-                            <div class="card">
-                                <span class="product-type">NEW</span>
-                                <div class="image-holder">
-                                    <a href="<c:url value="ASSETS/img/l12.jpg"/>" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
-                                        <img src="<c:url value="ASSETS/img/l12.jpg"/>" class="card-img-top" alt="Lastest Arrivals 1">
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-12 text-center">
-                                            <h5 class="card-title">Life Is Elsewhere</h5>
-                                        </div>
-                                        <div class="col-12 text-center">
-                                            <p class="card-text text-center"> $950.00</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="lastest_arrival_items item">
-                            <a href="product-detail.html" class="lastest-addto-cart"><i class="fa fa-shopping-cart"></i></a>
-                            <div class="card">
-                                <span class="product-type">NEW</span>
-                                <div class="image-holder">
-                                    <a href="<c:url value="ASSETS/img/l7.jpg"/>" data-fancybox="lastest_product" data-title="Lastest Arrivals 1">
-                                        <img src="<c:url value="ASSETS/img/l13.jpg"/>" class="card-img-top" alt="Lastest Arrivals 1">
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-12 text-center">
-                                            <h5 class="card-title">The Road</h5>
-                                        </div>
-                                        <div class="col-12 text-center">
-                                            <p class="card-text text-center"> $550.00</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
+				</c:forEach>
                 </div>
+            </div>
             </div>
         </div>
     </div>
@@ -948,7 +806,7 @@
             <div class="col-12 search-col">
                 <form action="javascript:void(0)">
                     <div class="input-group search-box-form">
-                        <input type="text" class="form-control" placeholder="Search Here" aria-label="Search Here">
+                        <input type="text" onkeyup="searchByName(this)" class="form-control" placeholder="Search Here" aria-label="Search Here">
                         <div class="input-group-prepend">
                             <button class="input-group-text" type="submit" id="basic-addon1"><i class="fas fa-search"></i></button>
                         </div>
@@ -960,51 +818,19 @@
                     <h4 class="">Filtered Items</h4>
                 </div>
                 <div class="col-12">
-                    <div class="listing-search-scroll">
-                        <div class="media row">
+                    <div class="listing-search-scroll" id="content"	>
+                        <div class="media row"  >
                             <div class="img-holder ml-1 mr-2 col-4">
-                                <a href="javascript:void(0)"><img src="<c:url value="ASSETS/img/book-1.jpg"/>" class="align-self-center" alt="cartitem"></a>
+                                <a href="javascript:void(0)"><img src="" class="align-self-center" alt="cartitem"></a>
                             </div>
                             <div class="media-body mt-auto mb-auto col-8">
-                                <h5 class="name"><a href="javascript:void(0)">So Sad Today</a></h5>
-                                <p class="category">Award Winning Book</p>
-                                <a class="btn black-sm-btn" href="shop-cart.html"><i class="fas fa-shopping-bag"></i></a>
+                                <h5 class="name"><a href="javascript:void(0)">Product Name</a></h5>
+                                <p class="category">Category Name</p>
+                                <a class="btn black-sm-btn" href="book-shop\shop-cart.html"><i class="fas fa-shopping-bag"></i></a>
                                 <a class="btn black-sm-btn" href="javascript:void(0)"><i class="fas fa-eye"></i></a>
                             </div>
                         </div>
-                        <div class="media row">
-                            <div class="img-holder ml-1 mr-2 col-4">
-                                <a href="javascript:void(0)"><img src="<c:url value="ASSETS/img/book-2.jpg"/>" class="align-self-center" alt="cartitem"></a>
-                            </div>
-                            <div class="media-body mt-auto mb-auto col-8">
-                                <h5 class="name"><a href="javascript:void(0)">As I Lay Dying</a></h5>
-                                <p class="category">Award Winning Book</p>
-                                <a class="btn black-sm-btn" href="shop-cart.html"><i class="fas fa-shopping-bag"></i></a>
-                                <a class="btn black-sm-btn" href="javascript:void(0)"><i class="fas fa-eye"></i></a>
-                            </div>
-                        </div>
-                        <div class="media row">
-                            <div class="img-holder ml-1 mr-2 col-4">
-                                <a href="javascript:void(0)"><img src="<c:url value="ASSETS/img/book-3.jpg"/>" class="align-self-center" alt="cartitem"></a>
-                            </div>
-                            <div class="media-body mt-auto mb-auto col-8">
-                                <h5 class="name"><a href="javascript:void(0)">Love Does</a></h5>
-                                <p class="category">Award Winning Book</p>
-                                <a class="btn black-sm-btn" href="shop-cart.html"><i class="fas fa-shopping-bag"></i></a>
-                                <a class="btn black-sm-btn" href="javascript:void(0)"><i class="fas fa-eye"></i></a>
-                            </div>
-                        </div>
-                        <div class="media row">
-                            <div class="img-holder ml-1 mr-2 col-4">
-                                <a href="javascript:void(0)"><img src="<c:url value="ASSETS/img/book-2-1.jpg"/>" class="align-self-center" alt="cartitem"></a>
-                            </div>
-                            <div class="media-body mt-auto mb-auto col-8">
-                                <h5 class="name"><a href="javascript:void(0)">The Last Stand</a></h5>
-                                <p class="category">Award Winning Book</p>
-                                <a class="btn black-sm-btn" href="shop-cart.html"><i class="fas fa-shopping-bag"></i></a>
-                                <a class="btn black-sm-btn" href="javascript:void(0)"><i class="fas fa-eye"></i></a>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -1018,64 +844,24 @@
 
             <div class="col-12">
                 <div class="search-box-meida-items owl-carousel owl-theme">
-
+				<c:forEach var="item" items="${author}">
+				
                     <div class="item">
                         <div class="brand-search-box ml-auto mr-auto">
                             <div class="media">
                                 <div class="brand-box-holder">
-                                    <a href="javascript:void(0)"> <img class="mr-3" src="<c:url value="ASSETS/img/author1.jpg"/>" alt="Generic placeholder image"></a>
+                                    <a href="javascript:void(0)"> <img class="mr-3" src="${item.getImg()}" alt="Generic placeholder image"></a>
                                 </div>
                                 <div class="media-body">
-                                    <h5 class="mt-0"><a href="javascript:void(0)"> Eva Smith</a></h5>
-                                    <p> Cras sit amet nibh libero.</p>
+                                    <h5 class="mt-0"><a href="javascript:void(0)"> ${item.getTenTG()}</a></h5>
+                                    <p> ${item.getNoiBat()}</p>
                                 </div>
                             </div>
                         </div>
 
                     </div>
-                    <div class="item">
-                        <div class="brand-search-box ml-auto mr-auto">
-                            <div class="media">
-                                <div class="brand-box-holder">
-                                    <a href="javascript:void(0)"> <img class="mr-3" src="<c:url value="ASSETS/img/author2.jpg"/>" alt="Generic placeholder image"></a>
-                                </div>
-                                <div class="media-body">
-                                    <h5 class="mt-0"><a href="javascript:void(0)">Rosa Parks</a></h5>
-                                    <p> Cras sit amet nibh libero.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="item">
-                        <div class="brand-search-box ml-auto mr-auto">
-                            <div class="media">
-                                <div class="brand-box-holder">
-                                    <a href="javascript:void(0)"> <img class="mr-3" src="<c:url value="ASSETS/img/author3.jpg"/>" alt="Generic placeholder image"></a>
-                                </div>
-                                <div class="media-body">
-                                    <h5 class="mt-0"><a href="javascript:void(0)">Alan Yang</a></h5>
-                                    <p> Cras sit amet nibh libero.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="item">
-                        <div class="brand-search-box ml-auto mr-auto">
-                            <div class="media">
-                                <div class="brand-box-holder">
-                                    <a href="javascript:void(0)"><img class="mr-3" src="<c:url value="ASSETS/img/author4.jpg"/>" alt="Generic placeholder image"></a>
-                                </div>
-                                <div class="media-body">
-                                    <h5 class="mt-0"><a href="javascript:void(0)">Kam John</a></h5>
-                                    <p> Cras sit amet nibh libero.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
+				</c:forEach>
+               
 
                 </div>
             </div>

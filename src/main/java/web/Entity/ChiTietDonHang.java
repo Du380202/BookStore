@@ -2,6 +2,8 @@ package web.Entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -9,26 +11,27 @@ import javax.persistence.Table;
 @Table(name = "ChiTietDonHang")
 public class ChiTietDonHang {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "IDChiTiet")
 	private Integer iDChiTiet;
 	@Column(name = "IDDonHang")
-	private String iDDonHang;
+	private Integer iDDonHang;
 	@Column(name = "IDSach")
 	private Integer idSach;
 	@Column(name = "SoLuong")
-	private String soLuong;
+	private Integer soLuong;
 	@Column(name="GiaBan")
-	private Integer giaBan;
+	private Double giaBan;
 	public Integer getiDChiTiet() {
 		return iDChiTiet;
 	}
 	public void setiDChiTiet(Integer iDChiTiet) {
 		this.iDChiTiet = iDChiTiet;
 	}
-	public String getiDDonHang() {
+	public Integer getiDDonHang() {
 		return iDDonHang;
 	}
-	public void setiDDonHang(String iDDonHang) {
+	public void setiDDonHang(Integer iDDonHang) {
 		this.iDDonHang = iDDonHang;
 	}
 	public Integer getIdSach() {
@@ -37,16 +40,16 @@ public class ChiTietDonHang {
 	public void setIdSach(Integer idSach) {
 		this.idSach = idSach;
 	}
-	public String getSoLuong() {
+	public Integer getSoLuong() {
 		return soLuong;
 	}
-	public void setSoLuong(String soLuong) {
-		this.soLuong = soLuong;
+	public void setSoLuong(Integer integer) {
+		this.soLuong = integer;
 	}
-	public Integer getGiaBan() {
+	public Double getGiaBan() {
 		return giaBan;
 	}
-	public void setGiaBan(Integer giaBan) {
+	public void setGiaBan(Double giaBan) {
 		this.giaBan = giaBan;
 	}
 	

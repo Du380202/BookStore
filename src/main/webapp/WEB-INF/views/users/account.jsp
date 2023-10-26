@@ -113,6 +113,11 @@
 		    padding: 0px;
 		    margin: 1px;
 		}
+		
+		html:not(.dark-style) .account-settings-links .list-group-item.active {
+		    background: #62ab00!important;
+		    color: white !important;
+		}
 	</style>
 </head>
 <body>
@@ -167,7 +172,7 @@
                                                             <h5 class="dropdown-title"> Categories </h5>
                                                             <ul>
 	                                                            <c:forEach var="item" items="${categories}">
-	                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="#">${item.getTenTheLoai()}</a></li>
+	                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="listCategory?id=${item.getIdTheLoai()}">${item.getTenTheLoai()}</a></li>
 	                                                              </c:forEach>
                                                             </ul>
 
@@ -181,7 +186,7 @@
 	                                                                    <img class="align-self-start" src="<c:url value="${item.getImg()}"/>" alt="Generic placeholder image">
 	                                                                </div>
 	                                                                <div class="media-body">
-	                                                                    <h6 class="mt-3 ml-3"><a href="#">${item.getTenTG()}</a></h6>
+	                                                                    <h6 class="mt-3 ml-3"><a href="listAuthor?id=${item.getMaTG()}">${item.getTenTG()}</a></h6>
 	                                                                </div>
 	                                                            </div>
 															</c:forEach>
@@ -359,15 +364,15 @@
             <div class="col-md-3 pt-0">
                 <div class="list-group list-group-flush account-settings-links">
                     <a class="list-group-item list-group-item-action active" data-toggle="list"
-                        href="#account-general"><i class="ti-user"></i>General</a>
+                        href="#account-general"><i class="fas fa-user mr-3"></i>General</a>
                     <a class="list-group-item list-group-item-action" data-toggle="list"
-                        href="#account-change-password"><i class="ti-settings"></i>Change password</a>
+                        href="#account-change-password"><i class="fas fa-key mr-3"></i>Change password</a>
                    
                     <a class="list-group-item list-group-item-action" data-toggle="list"
-                        href="#account-social-links"><i class="ti-link"></i>Social links</a>
+                        href="#account-social-links"><i class="fas fa-globe mr-3"></i>Social links</a>
                         <!-- Order -->
                     <a class="list-group-item list-group-item-action" data-toggle="list"
-                        href="#account-order"><i class="ti-shopping-cart-full"></i>Order</a> 
+                        href="#account-order"><i class="fas fa-shopping-cart mr-3"></i></i>Order</a> 
                 </div>
             </div>
             <div class="col-md-9">
@@ -422,22 +427,20 @@
                         <div class="card-body pb-2">
                             <div class="form-group">
                                 <label class="form-label">Current password</label>
-                                <input type="password" class="form-control">
+                                <input type="password"  class="form-control">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">New password</label>
-                                <input type="password" class="form-control">
+                                <input type="password" id="password1" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Repeat new password</label>
-                                <input type="password" class="form-control">
+                                <input type="password" id="password1" class="form-control">
                             </div>
                         </div>
-                        <div class="col-12">
-	                          <a href="signin" style="display: flex; justify-content: flex-end">
-	                          <button class="btn green-color-yellow-gradient-btn user-contact contact_btn"  type="submit">SAVE
+                        <div class="col-12" style="display: flex; justify-content: flex-end">
+	                          <button  class="btn green-color-yellow-gradient-btn user-contact contact_btn"  type="submit">SAVE
 	                         </button>
-	                         </a>
 	                    </div>
                     </div>
                     
@@ -673,9 +676,9 @@
     <div class="container">
         <div class="row">
             <div class="col-12 search-col">
-                <form action="#">
+                <form action="javascript:void(0)">
                     <div class="input-group search-box-form">
-                        <input type="text" class="form-control" placeholder="Search Here" aria-label="Search Here">
+                        <input type="text" onkeyup="searchByName(this)" class="form-control" placeholder="Search Here" aria-label="Search Here">
                         <div class="input-group-prepend">
                             <button class="input-group-text" type="submit" id="basic-addon1"><i class="fas fa-search"></i></button>
                         </div>
@@ -686,39 +689,20 @@
                 <div class="col-12 mb-4">
                     <h4 class="">Filtered Items</h4>
                 </div>
-                <div class="col-12 listing-search-scroll">
-                    <div class="media row">
-                        <div class="img-holder ml-1 mr-2 col-4">
-                            <a href="#"><img src="img/product-listing/p54.jpg" class="align-self-center" alt="cartitem"></a>
+                <div class="col-12">
+                    <div class="listing-search-scroll" id="content"	>
+                        <div class="media row"  >
+                            <div class="img-holder ml-1 mr-2 col-4">
+                                <a href="javascript:void(0)"><img src="" class="align-self-center" alt="cartitem"></a>
+                            </div>
+                            <div class="media-body mt-auto mb-auto col-8">
+                                <h5 class="name"><a href="javascript:void(0)">Product Name</a></h5>
+                                <p class="category">Category Name</p>
+                                <a class="btn black-sm-btn" href="book-shop\shop-cart.html"><i class="fas fa-shopping-bag"></i></a>
+                                <a class="btn black-sm-btn" href="javascript:void(0)"><i class="fas fa-eye"></i></a>
+                            </div>
                         </div>
-                        <div class="media-body mt-auto mb-auto col-8">
-                            <h5 class="name"><a href="#">Light wear</a></h5>
-                            <p class="category">light wear Lastest</p>
-                            <a class="btn black-sm-btn" href="shop-cart.html"><i class="fas fa-shopping-bag"></i></a>
-                            <a class="btn black-sm-btn"><i class="fas fa-eye"></i></a>
-                        </div>
-                    </div>
-                    <div class="media row">
-                        <div class="img-holder ml-1 mr-2 col-4">
-                            <a href="#"><img src="img/product-listing/p58.jpg" class="align-self-center" alt="cartitem"></a>
-                        </div>
-                        <div class="media-body mt-auto mb-auto col-8">
-                            <h5 class="name"><a href="#">light wear</a></h5>
-                            <p class="category">light wear Lastest</p>
-                            <a class="btn black-sm-btn" href="shop-cart.html"><i class="fas fa-shopping-bag"></i></a>
-                            <a class="btn black-sm-btn"><i class="fas fa-eye"></i></a>
-                        </div>
-                    </div>
-                    <div class="media row">
-                        <div class="img-holder ml-1 mr-2 col-4">
-                            <a href="#"><img src="img/product-listing/p6.jpg" class="align-self-center" alt="cartitem"></a>
-                        </div>
-                        <div class="media-body mt-auto mb-auto col-8">
-                            <h5 class="name"><a href="#"> light wear</a></h5>
-                            <p class="category">light wear Lastest</p>
-                            <a class="btn black-sm-btn" href="shop-cart.html"><i class="fas fa-shopping-bag"></i></a>
-                            <a class="btn black-sm-btn"><i class="fas fa-eye"></i></a>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -727,69 +711,29 @@
             </div>
 
             <div class="col-12">
-                <h4 class="outlet-title text-center"> - Outlets - </h4>
+                <h4 class="outlet-title text-center"> - Author - </h4>
             </div>
 
             <div class="col-12">
                 <div class="search-box-meida-items owl-carousel owl-theme">
-
+				<c:forEach var="item" items="${author}">
+				
                     <div class="item">
                         <div class="brand-search-box ml-auto mr-auto">
                             <div class="media">
                                 <div class="brand-box-holder">
-                                    <a href="#"> <img class="mr-3" src="img/product-listing/p38.jpg" alt="Generic placeholder image"></a>
+                                    <a href="javascript:void(0)"> <img class="mr-3" src="${item.getImg()}" alt="Generic placeholder image"></a>
                                 </div>
                                 <div class="media-body">
-                                    <h5 class="mt-0"><a href="#"> Modest Fashion</a></h5>
-                                    <p> Cras sit amet nibh libero.</p>
+                                    <h5 class="mt-0"><a href="javascript:void(0)"> ${item.getTenTG()}</a></h5>
+                                    <p> ${item.getNoiBat()}</p>
                                 </div>
                             </div>
                         </div>
 
                     </div>
-                    <div class="item">
-                        <div class="brand-search-box ml-auto mr-auto">
-                            <div class="media">
-                                <div class="brand-box-holder">
-                                    <img class="mr-3" src="img/product-listing/p38.jpg" alt="Generic placeholder image">
-                                </div>
-                                <div class="media-body">
-                                    <h5 class="mt-0"><a href="product-listing.html"> Modest Fashion</a></h5>
-                                    <p> Cras sit amet nibh libero.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="item">
-                        <div class="brand-search-box ml-auto mr-auto">
-                            <div class="media">
-                                <div class="brand-box-holder">
-                                    <img class="mr-3" src="img/product-listing/p38.jpg" alt="Generic placeholder image">
-                                </div>
-                                <div class="media-body">
-                                    <h5 class="mt-0"><a href="product-listing.html"> Modest Fashion</a></h5>
-                                    <p> Cras sit amet nibh libero.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="item">
-                        <div class="brand-search-box ml-auto mr-auto">
-                            <div class="media">
-                                <div class="brand-box-holder">
-                                    <img class="mr-3" src="img/product-listing/p38.jpg" alt="Generic placeholder image">
-                                </div>
-                                <div class="media-body">
-                                    <h5 class="mt-0"><a href="product-listing.html"> Modest Fashion</a></h5>
-                                    <p> Cras sit amet nibh libero.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
+				</c:forEach>
+               
 
                 </div>
             </div>
@@ -798,7 +742,28 @@
 
 </div>
 <!--END SEARCH AREA -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
 
+	function searchByName(param) {
+	    var txtSearch = param.value;
+	    $.ajax({
+	        url: "/BookStore/search", // Đường dẫn tới controller xử lý tìm kiếm
+	        type: "GET",
+	        data: {
+	            txt: txtSearch
+	        },
+	        success: function (data) {
+	            var row = document.getElementById("content");
+	            row.innerHTML = data;
+	        },
+	        error: function (xhr) {
+	            // Xử lý lỗi nếu có
+	        }
+	    });
+	}
+
+</script>
 
 <!-- JavaScript -->
 <script src="<c:url value="/ASSETS/vendor/js/bundle.min.js"/>"></script>
@@ -838,6 +803,21 @@
 	 }
 
  </script>
+ <script type="text/javascript">
+			window.onload = function () {
+				document.getElementById("password1").onchange = validatePassword;
+				document.getElementById("password2").onchange = validatePassword;
+			}
+			function validatePassword(){
+				var pass2=document.getElementById("password2").value;
+				var pass1=document.getElementById("password1").value;
+				if(pass1!=pass2)
+					document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+				else
+					document.getElementById("password2").setCustomValidity('');	 
+					//empty string means no validation error
+			}
+		</script>
 
 <!-- Custom Script -->
 <script src="<c:url value="/ASSETS/js/script.js"/>"></script>

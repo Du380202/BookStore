@@ -163,7 +163,7 @@
                                                             <h5 class="dropdown-title"> Categories </h5>
                                                             <ul>
 	                                                            <c:forEach var="item" items="${categories}">
-	                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="#">${item.getTenTheLoai()}</a></li>
+	                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="listCategory?id=${item.getIdTheLoai()}">${item.getTenTheLoai()}</a></li>
 	                                                              </c:forEach>
                                                             </ul>
 
@@ -177,7 +177,7 @@
 	                                                                    <img class="align-self-start" src="<c:url value="${item.getImg()}"/>" alt="Generic placeholder image">
 	                                                                </div>
 	                                                                <div class="media-body">
-	                                                                    <h6 class="mt-3 ml-3"><a href="#">${item.getTenTG()}</a></h6>
+	                                                                    <h6 class="mt-3 ml-3"><a href="listAuthor?id=${item.getMaTG()}">${item.getTenTG()}</a></h6>
 	                                                                </div>
 	                                                            </div>
 															</c:forEach>
@@ -202,9 +202,13 @@
                                                     <li><i class="lni-angle-double-right right-arrow"></i><a
                                                             class="dropdown-item" href="list">Detail
                                                             Page</a></li>
-                                                    <li><i class="lni-angle-double-right right-arrow"></i><a
-                                                            class="dropdown-item" href="shopCart">ShopCart
-                                                            Page</a></li>
+                                                     <c:if test="${empty loggedInUser}">
+		                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="signin">ShopCart Page</a></li>
+		                                             </c:if>
+		                                             
+		                                             <c:if test="${not empty loggedInUser}">
+		                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="shopCart">ShopCart Page</a></li>
+		                                             </c:if>
                                                 </ul>
                                             </div>
                                         </li>
@@ -439,11 +443,9 @@
                         <div class="product-category">
                             <h5 class="filter-heading  text-center text-lg-left">Category</h5>
                             <ul>
-                                <li><a href="javascript:void(0)">Tiểu thuyết </a><span>(2)</span></li>
-                                <li><a href="javascript:void(0)">Tâm Lý </a><span>(4)</span></li>
-                                <li><a href="javascript:void(0)">Khoa học viễn tưởng </a><span>(2)</span></li>
-                                <li><a href="javascript:void(0)">Lịch sử </a><span>(7)</span></li>
-                                <li><a href="javascript:void(0)">Cổ điển </a><span>(9)</span></li>
+                            <c:forEach var="item" items="${categories}">
+                                <li><a href="javascript:void(0)">${item.getTenTheLoai()} </a></li>
+                            </c:forEach>
                             </ul>
                         </div>
                         <div class="product-price mt-1">
@@ -504,7 +506,7 @@
                                         </div>
                                     </div>
                                     <div class="p-item-detail">
-                                        <h4 class="text-center p-item-name"><a href="product-detail.html"> ${item.getTenSach()}
+                                        <h4 class="text-center p-item-name"><a href="detail?id=${item.getMaSach()}"> ${item.getTenSach()}
                                             </a></h4>
                                         <p class="text-center p-item-price">$${item.getGiaBan()}</p>
                                     </div>
@@ -675,156 +677,71 @@
         <a><i class="fas fa-times cross-sign" id="close-window"></i></a>
 
         <div class="container">
-            <div class="row">
-                <div class="col-12 search-col">
-                    <form action="javascript:void(0)">
-                        <div class="input-group search-box-form">
-                            <input type="text" class="form-control" placeholder="Search Here" aria-label="Search Here">
-                            <div class="input-group-prepend">
-                                <button class="input-group-text" type="submit" id="basic-addon1"><i
-                                        class="fas fa-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="search-listing row">
-                    <div class="col-12 mb-4">
-                        <h4 class="">Filtered Items</h4>
-                    </div>
-                    <div class="col-12">
-                        <div class="listing-search-scroll">
-                            <div class="media row">
-                                <div class="img-holder ml-1 mr-2 col-4">
-                                    <a href="javascript:void(0)"><img src="<c:url value="ASSETS/img/book-1.jpg"/>" class="align-self-center"
-                                            alt="cartitem"></a>
-                                </div>
-                                <div class="media-body mt-auto mb-auto col-8">
-                                    <h5 class="name"><a href="javascript:void(0)">So Sad Today</a></h5>
-                                    <p class="category">Award Winning Book</p>
-                                    <a class="btn black-sm-btn" href="shop-cart.html"><i
-                                            class="fas fa-shopping-bag"></i></a>
-                                    <a class="btn black-sm-btn" href="javascript:void(0)"><i class="fas fa-eye"></i></a>
-                                </div>
-                            </div>
-                            <div class="media row">
-                                <div class="img-holder ml-1 mr-2 col-4">
-                                    <a href="javascript:void(0)"><img src="<c:url value="ASSETS/img/book-2.jpg"/>" class="align-self-center"
-                                            alt="cartitem"></a>
-                                </div>
-                                <div class="media-body mt-auto mb-auto col-8">
-                                    <h5 class="name"><a href="javascript:void(0)">As I Lay Dying</a></h5>
-                                    <p class="category">Award Winning Book</p>
-                                    <a class="btn black-sm-btn" href="shop-cart.html"><i
-                                            class="fas fa-shopping-bag"></i></a>
-                                    <a class="btn black-sm-btn" href="javascript:void(0)"><i class="fas fa-eye"></i></a>
-                                </div>
-                            </div>
-                            <div class="media row">
-                                <div class="img-holder ml-1 mr-2 col-4">
-                                    <a href="javascript:void(0)"><img src="<c:url value="ASSETS/img/book-3.jpg"/>" class="align-self-center"
-                                            alt="cartitem"></a>
-                                </div>
-                                <div class="media-body mt-auto mb-auto col-8">
-                                    <h5 class="name"><a href="javascript:void(0)">Love Does</a></h5>
-                                    <p class="category">Award Winning Book</p>
-                                    <a class="btn black-sm-btn" href="shop-cart.html"><i
-                                            class="fas fa-shopping-bag"></i></a>
-                                    <a class="btn black-sm-btn" href="javascript:void(0)"><i class="fas fa-eye"></i></a>
-                                </div>
-                            </div>
-                            <div class="media row">
-                                <div class="img-holder ml-1 mr-2 col-4">
-                                    <a href="javascript:void(0)"><img src="<c:url value="ASSETS/img/book-2-1.jpg"/>" class="align-self-center"
-                                            alt="cartitem"></a>
-                                </div>
-                                <div class="media-body mt-auto mb-auto col-8">
-                                    <h5 class="name"><a href="javascript:void(0)">The Last Stand</a></h5>
-                                    <p class="category">Award Winning Book</p>
-                                    <a class="btn black-sm-btn" href="shop-cart.html"><i
-                                            class="fas fa-shopping-bag"></i></a>
-                                    <a class="btn black-sm-btn" href="javascript:void(0)"><i class="fas fa-eye"></i></a>
-                                </div>
-                            </div>
+        <div class="row">
+            <div class="col-12 search-col">
+                <form action="javascript:void(0)">
+                    <div class="input-group search-box-form">
+                        <input type="text" onkeyup="searchByName(this)" class="form-control" placeholder="Search Here" aria-label="Search Here">
+                        <div class="input-group-prepend">
+                            <button class="input-group-text" type="submit" id="basic-addon1"><i class="fas fa-search"></i></button>
                         </div>
                     </div>
+                </form>
+            </div>
+            <div class="search-listing row">
+                <div class="col-12 mb-4">
+                    <h4 class="">Filtered Items</h4>
                 </div>
                 <div class="col-12">
-                    <hr>
-                </div>
-
-                <div class="col-12">
-                    <h4 class="outlet-title text-center"> - Author - </h4>
-                </div>
-
-                <div class="col-12">
-                    <div class="search-box-meida-items owl-carousel owl-theme">
-
-                        <div class="item">
-                            <div class="brand-search-box ml-auto mr-auto">
-                                <div class="media">
-                                    <div class="brand-box-holder">
-                                        <a href="javascript:void(0)"> <img class="mr-3" src="<c:url value="ASSETS/img/author1.jpg"/>"
-                                                alt="Generic placeholder image"></a>
-                                    </div>
-                                    <div class="media-body">
-                                        <h5 class="mt-0"><a href="javascript:void(0)"> Eva Smith</a></h5>
-                                        <p> Cras sit amet nibh libero.</p>
-                                    </div>
-                                </div>
+                    <div class="listing-search-scroll" id="content"	>
+                        <div class="media row"  >
+                            <div class="img-holder ml-1 mr-2 col-4">
+                                <a href="javascript:void(0)"><img src="" class="align-self-center" alt="cartitem"></a>
                             </div>
-
-                        </div>
-                        <div class="item">
-                            <div class="brand-search-box ml-auto mr-auto">
-                                <div class="media">
-                                    <div class="brand-box-holder">
-                                        <a href="javascript:void(0)"> <img class="mr-3" src="<c:url value="ASSETS/img/author2.jpg"/>"
-                                                alt="Generic placeholder image"></a>
-                                    </div>
-                                    <div class="media-body">
-                                        <h5 class="mt-0"><a href="javascript:void(0)">Rosa Parks</a></h5>
-                                        <p> Cras sit amet nibh libero.</p>
-                                    </div>
-                                </div>
+                            <div class="media-body mt-auto mb-auto col-8">
+                                <h5 class="name"><a href="javascript:void(0)">Product Name</a></h5>
+                                <p class="category">Category Name</p>
+                                <a class="btn black-sm-btn" href="book-shop\shop-cart.html"><i class="fas fa-shopping-bag"></i></a>
+                                <a class="btn black-sm-btn" href="javascript:void(0)"><i class="fas fa-eye"></i></a>
                             </div>
-
                         </div>
-                        <div class="item">
-                            <div class="brand-search-box ml-auto mr-auto">
-                                <div class="media">
-                                    <div class="brand-box-holder">
-                                        <a href="javascript:void(0)"> <img class="mr-3" src="<c:url value="ASSETS/img/author3.jpg"/>"
-                                                alt="Generic placeholder image"></a>
-                                    </div>
-                                    <div class="media-body">
-                                        <h5 class="mt-0"><a href="javascript:void(0)">Alan Yang</a></h5>
-                                        <p> Cras sit amet nibh libero.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="item">
-                            <div class="brand-search-box ml-auto mr-auto">
-                                <div class="media">
-                                    <div class="brand-box-holder">
-                                        <a href="javascript:void(0)"><img class="mr-3" src="<c:url value="ASSETS/img/author4.jpg"/>"
-                                                alt="Generic placeholder image"></a>
-                                    </div>
-                                    <div class="media-body">
-                                        <h5 class="mt-0"><a href="javascript:void(0)">Kam John</a></h5>
-                                        <p> Cras sit amet nibh libero.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-
+                        
                     </div>
                 </div>
             </div>
+            <div class="col-12">
+                <hr>
+            </div>
+
+            <div class="col-12">
+                <h4 class="outlet-title text-center"> - Author - </h4>
+            </div>
+
+            <div class="col-12">
+                <div class="search-box-meida-items owl-carousel owl-theme">
+				<c:forEach var="item" items="${author}">
+				
+                    <div class="item">
+                        <div class="brand-search-box ml-auto mr-auto">
+                            <div class="media">
+                                <div class="brand-box-holder">
+                                    <a href="javascript:void(0)"> <img class="mr-3" src="${item.getImg()}" alt="Generic placeholder image"></a>
+                                </div>
+                                <div class="media-body">
+                                    <h5 class="mt-0"><a href="javascript:void(0)"> ${item.getTenTG()}</a></h5>
+                                    <p> ${item.getNoiBat()}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+				</c:forEach>
+               
+
+                </div>
+            </div>
         </div>
+    </div>
 
     </div>
     <!--END SEARCH AREA -->
@@ -909,6 +826,28 @@
     <!--END Cart Box -->
 
     <!-- JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+
+	function searchByName(param) {
+	    var txtSearch = param.value;
+	    $.ajax({
+	        url: "/BookStore/search", // Đường dẫn tới controller xử lý tìm kiếm
+	        type: "GET",
+	        data: {
+	            txt: txtSearch
+	        },
+	        success: function (data) {
+	            var row = document.getElementById("content");
+	            row.innerHTML = data;
+	        },
+	        error: function (xhr) {
+	            // Xử lý lỗi nếu có
+	        }
+	    });
+	}
+
+</script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     // Bắt đầu xử lý khi tài liệu đã tải hoàn tất

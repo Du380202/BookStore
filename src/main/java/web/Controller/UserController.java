@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,7 +68,14 @@ public class UserController {
 		return "users/account";
 	}
 	
-	
+//	
+//	@RequestMapping("Change")
+//	public String changePass(Model model, HttpSession session, String pass) {
+//		Users user = (Users) session.getAttribute("loggedInUser");
+//		user.setMatKhau(pass);
+//		return "users/account";
+//	}
+//	
 	
 	
 }
