@@ -22,7 +22,7 @@ public class DonHang {
 	@Column(name = "UserId")
 	private Integer userId;
 	@Column(name = "TrangThai")
-	private String trangThai;
+	private Integer trangThai;
 	@Column(name="TongTien")
 	private Double tongTien;
 	@Column(name="DiaChi")
@@ -74,10 +74,10 @@ public class DonHang {
 		this.ngayDat = ngayDat;
 	}
 
-	public String getTrangThai() {
+	public Integer getTrangThai() {
 		return trangThai;
 	}
-	public void setTrangThai(String trangThai) {
+	public void setTrangThai(Integer trangThai) {
 		this.trangThai = trangThai;
 	}
 

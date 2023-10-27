@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="<c:url value="/ASSETS/css/style.css"/>">
     <!-- Custom Css  -->
     <link rel="stylesheet" href="<c:url value="/ASSETS/css/custom.css"/>">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.5/dist/sweetalert2.min.css">
     <style>
 		.col-lg-3 {
 	        -ms-flex: 0 0 33%;
@@ -195,6 +196,10 @@
 	        
 	    }
 	    
+	    .btn-cancel:hover {
+	    	background-color: red;
+	    }
+	    
 	    .tab-content {
 		    border-left: .5px solid #eceff6;
 		    border-right: .5px solid #eceff6;
@@ -215,7 +220,7 @@
 	        margin: 0px;
 	        border-left: 1px solid rgba(0,0,0,.09);
 	        padding-left: 10px;
-	        color: #ee4d2d;
+	        color: #62ab00;
 	    }
 	    
 	    order-font {
@@ -580,45 +585,63 @@
                     </div>
                     <!-- Order -->
                     <div class="tab-pane fade" id="account-order">
+                    <c:forEach var="donHang" items="${orders}">
+                     <c:if test="${donHang.getStatus() == 0}">
+                         <div class="order-status">
+                                <p class="border-left-status" style="color: #ee4d2d;">Đã hủy</p>
+                            </div>
+                       </c:if>
+                       
+                         <c:if test="${donHang.getStatus() == 1}">
+                         <div class="order-status">
+                                <p class="border-left-status" style="color: #f7941d">Đang giao</p>
+                            </div>
+                       </c:if>
+                       
+                       <c:if test="${donHang.getStatus() == 2}">
                          <div class="order-status">
                                 <p class="border-left-status">Hoàn thành</p>
                             </div>
-                        <div class="order">
+                       </c:if>
+                            <c:forEach var="item" items="${donHang.getChiTiet()}">
+                        	<div class="order">
                                 
                                 <div class="order-product">
                                    
-                                    <img class="order-img" src="https://www.netabooks.vn/Data/Sites/1/Product/23855/vu-tru-trong-vo-hat-de-5.jpg" alt="">
+                                    <img class="order-img" src="${item.getImg1()}" alt="">
                                    
                                     <div class="order-name">
-                                        <h5 style="font-size: 16px; line-height: 22px; margin-bottom: 5px" class="order-font">ten san pham</h5>
-                                        <h6 style="font-size: 14px !important;     color: rgba(0,0,0,.54);   margin: 0 0 5px;" class="order-font">phan loai</h6>
-                                        <h6 style="font-size: 14px !important; margin: 0 0 5px;" class="order-font">so luong</h6>
+                                        <h5 style="font-size: 16px; line-height: 22px; margin-bottom: 5px" class="order-font">${item.getTieuDe()}</h5>
+                                        <h6 style="font-size: 14px !important;     color: rgba(0,0,0,.54);   margin: 0 0 5px;" class="order-font">${item.getTenTG()}</h6>
+                                        <h6 style="font-size: 14px !important; margin: 0 0 5px;" class="order-font">x${item.getSoLuong()}</h6>
                                     </div>
                                     
                                 </div>
                                 <div class="order-price">
-                                    <span style="margin-right: 20px;">$13.00</span>
+                                    <span style="margin-right: 20px;">$${item.getGia()}</span>
                                 </div>
                                
                                 
                             </div>
+                            </c:forEach>
+             			
 
                             
                           <!--   <div class="border-order"></div> -->
-                            <div class="order-totalprice">
-                                <span style="margin-right: 20px;">$94.00</span>
+                           <div class="order-totalprice">
+                                <span style="margin-right: 20px;">$${donHang.getTongTien() }0</span>
                             </div>
                             <div class="order-action">
                                 <div class="order-btn-cancel">
-                                    <button class="btn-cancel">Huy Đơn Hàng</button>
+                                    <button class="btn-cancel" onclick="confirmDeleteOrder(${donHang.getIdDonHang()});">Hủy Đơn Hàng</button>
                                 </div>
                             </div>
-                            
-                            <div class="order-status">
+                            </c:forEach>
+                          <!--   <div class="order-status">
                                 <p class="border-left-status">Hoàn thành</p>
-                            </div>
+                            </div> -->
                      
-                        <div class="order">
+                        <!--  <div class="order">
                                 
                                 <div class="order-product">
                                    
@@ -639,7 +662,7 @@
                             </div>
 
                             
-                          <!--   <div class="border-order"></div> -->
+                            <div class="border-order"></div>
                             <div class="order-totalprice">
                                 <span style="margin-right: 20px;">$94.00</span>
                             </div>
@@ -647,9 +670,8 @@
                                 <div class="order-btn-cancel">
                                     <button class="btn-cancel">Huy Đơn Hàng</button>
                                 </div>
-                            </div>
+                            </div> -->
                             
-             
                     </div>
 
 
@@ -922,7 +944,24 @@
 	}
 
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.5/dist/sweetalert2.all.min.js"></script>
+	<script>
+	    function confirmDeleteOrder(orderId) {
+	        Swal.fire({
+	            title: 'Xác nhận hủy đơn hàng',
+	            text: 'Bạn có chắc chắn muốn hủy đơn hàng này?',
+	            icon: 'warning',
+	            showCancelButton: true,
+	            confirmButtonText: 'Xóa',
+	            cancelButtonText: 'Hủy bỏ'
+	        }).then((result) => {
+	            if (result.isConfirmed) {
+	                // Nếu người dùng chấp nhận xóa, hãy chuyển họ đến URL xóa sản phẩm
+	                window.location.href = "DeleteOrder/" + orderId;
+	            }
+	        });
+	    }
+	</script>
 <!-- JavaScript -->
 <script src="<c:url value="/ASSETS/vendor/js/bundle.min.js"/>"></script>
 <!-- Plugin Js -->
@@ -976,6 +1015,34 @@
 					//empty string means no validation error
 			}
 		</script>
+		
+<script>
+	    $(document).ready(function() {
+	        var deleteSuccess = getUrlParameter("deleteSuccess");
+	        var deleteError = getUrlParameter("deleteError");
+	        var previousURL = document.referrer;
+	        if (deleteSuccess) {
+	            Swal.fire({
+	                icon: "success",
+	                title: "Thông báo",
+	                text: decodeURIComponent(deleteSuccess),
+	            });
+	        } else if (deleteError) {
+	            Swal.fire({
+	                icon: "error",
+	                title: "Thông báo",
+	                text: decodeURIComponent(deleteError),
+	            });
+	        }
+	    });
+	
+	    function getUrlParameter(name) {
+	        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+	        var results = regex.exec(location.search);
+	        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	    }
+	 </script>
 
 <!-- Custom Script -->
 <script src="<c:url value="/ASSETS/js/script.js"/>"></script>
