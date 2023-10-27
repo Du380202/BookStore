@@ -118,6 +118,110 @@
 		    background: #62ab00!important;
 		    color: white !important;
 		}
+		
+	
+	    .order-img {
+	        width: 80px;
+	        height: 80px;
+	        flex-shrink: 0;
+	        border: 1px solid #e1e1e1;
+	        background: #e1e1e1;
+	    }
+	    .order, .order-product {
+	        display: flex;
+	        word-wrap: break-word;
+	    }
+	
+	    .order {
+	        padding: 12px 0 0;
+	        align-items: center;
+	        flex-wrap: nowrap;
+	        color: rgba(0,0,0,.87);
+	        margin: 10px 16px 0;
+	        border-top: 1px solid rgba(0,0,0,.09);
+	    }
+	
+	    .order-product {
+	        padding: 0 12px 0 0;
+	        flex: 1;
+	        align-items: flex-start;
+	        flex-wrap: nowrap;
+	    }
+	    .order-name {
+	        min-width: 0;
+	        padding: 0 0 0 12px;
+	        display: flex;
+	        flex: 1;
+	        flex-direction: column;
+	        align-items: flex-start;
+	        word-wrap: break-word;
+	    }
+
+	    .order-totalprice {
+	        padding-top: 24px;
+		    display: flex;
+		    justify-content: flex-end;
+		    align-items: center;
+		    margin-left: 16px;
+		    margin-right: 16px;
+		    border-top: 1px solid rgba(0,0,0,.09);
+		    margin-top: 12px;
+	    }
+	
+	    .order-action {
+	        display: flex;
+		    justify-content: flex-end;
+		    padding-top: 24px;
+		    padding-bottom: 24px;
+		    border-bottom: 1px solid rgba(0,0,0,.09);
+		    margin-bottom: 20px;
+	    }
+	
+	    .btn-cancel {
+	        min-width: 150px;
+	        min-height: 40px;
+	        padding: 8px 20px;
+	        outline: none;
+	        overflow: hidden;
+	        text-overflow: ellipsis;
+	        text-transform: capitalize;
+	        border-radius: 2px;
+	        outline: 0;
+	        background-color: #ee4d2d;
+	        /* border-color: #cd3011; */
+	        color: #fff;
+	        border: none;
+	        margin-right: 16px;
+	        
+	    }
+	    
+	    .tab-content {
+		    border-left: .5px solid #eceff6;
+		    border-right: .5px solid #eceff6;
+		    border-bottom: .5px solid #eceff6;
+		    padding-top: 24px !important;
+		    padding-bottom: 40px;
+		    padding-left: 0px !important;
+		    padding-right: 0px !important;
+		}
+		
+		.order-status {
+	        display: flex;
+	        justify-content: flex-end;
+	        margin-right: 16px;
+	    }
+	
+	    .border-left-status {
+	        margin: 0px;
+	        border-left: 1px solid rgba(0,0,0,.09);
+	        padding-left: 10px;
+	        color: #ee4d2d;
+	    }
+	    
+	    order-font {
+	    	font-size: 14px !important;
+	    }
+		
 	</style>
 </head>
 <body>
@@ -476,22 +580,76 @@
                     </div>
                     <!-- Order -->
                     <div class="tab-pane fade" id="account-order">
-                        <div class="card-body pb-2">
-                          <ul>
-                            <li><a href=""><i class="ti-menu"></i>Tất cả</a></li>
-                            <li><a href=""><i class="ti-money"></i>Chờ thanh toán</a></li>
-                            <li><a href=""><i class="ti-car"></i>Vận chuyển</a></li>
-                            <li><a href=""><i class="ti-truck"></i>Đang giao</a></li>
-                            <li><a href=""><i class="ti-check"></i>Hoàn thành</a></li>
-                            <li><a href=""><i class="ti-face-sad"></i>Đã hủy</a></li>
-                          </ul>
-                        </div>
-                        <div class="col-12">
-	                          <a href="signin" style="display: flex; justify-content: flex-end">
-	                          <button class="btn green-color-yellow-gradient-btn user-contact contact_btn"  type="submit">SAVE
-	                         </button>
-	                         </a>
-	                    </div>
+                         <div class="order-status">
+                                <p class="border-left-status">Hoàn thành</p>
+                            </div>
+                        <div class="order">
+                                
+                                <div class="order-product">
+                                   
+                                    <img class="order-img" src="https://www.netabooks.vn/Data/Sites/1/Product/23855/vu-tru-trong-vo-hat-de-5.jpg" alt="">
+                                   
+                                    <div class="order-name">
+                                        <h5 style="font-size: 16px; line-height: 22px; margin-bottom: 5px" class="order-font">ten san pham</h5>
+                                        <h6 style="font-size: 14px !important;     color: rgba(0,0,0,.54);   margin: 0 0 5px;" class="order-font">phan loai</h6>
+                                        <h6 style="font-size: 14px !important; margin: 0 0 5px;" class="order-font">so luong</h6>
+                                    </div>
+                                    
+                                </div>
+                                <div class="order-price">
+                                    <span style="margin-right: 20px;">$13.00</span>
+                                </div>
+                               
+                                
+                            </div>
+
+                            
+                          <!--   <div class="border-order"></div> -->
+                            <div class="order-totalprice">
+                                <span style="margin-right: 20px;">$94.00</span>
+                            </div>
+                            <div class="order-action">
+                                <div class="order-btn-cancel">
+                                    <button class="btn-cancel">Huy Đơn Hàng</button>
+                                </div>
+                            </div>
+                            
+                            <div class="order-status">
+                                <p class="border-left-status">Hoàn thành</p>
+                            </div>
+                     
+                        <div class="order">
+                                
+                                <div class="order-product">
+                                   
+                                    <img class="order-img" src="https://www.netabooks.vn/Data/Sites/1/Product/23855/vu-tru-trong-vo-hat-de-5.jpg" alt="">
+                                   
+                                    <div class="order-name">
+                                        <h5 style="font-size: 16px; line-height: 22px; margin-bottom: 5px" class="order-font">ten san pham</h5>
+                                        <h6 style="font-size: 14px !important;     color: rgba(0,0,0,.54);   margin: 0 0 5px;" class="order-font">phan loai</h6>
+                                        <h6 style="font-size: 14px !important; margin: 0 0 5px;" class="order-font">so luong</h6>
+                                    </div>
+                                    
+                                </div>
+                                <div class="order-price">
+                                    <span style="margin-right: 20px;">$13.00</span>
+                                </div>
+                               
+                                
+                            </div>
+
+                            
+                          <!--   <div class="border-order"></div> -->
+                            <div class="order-totalprice">
+                                <span style="margin-right: 20px;">$94.00</span>
+                            </div>
+                            <div class="order-action">
+                                <div class="order-btn-cancel">
+                                    <button class="btn-cancel">Huy Đơn Hàng</button>
+                                </div>
+                            </div>
+                            
+             
                     </div>
 
 

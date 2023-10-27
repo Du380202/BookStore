@@ -108,6 +108,24 @@
 		.pagination a:hover:not(.active) {
 		  background-color: #ddd;
 		  border-radius: 5px;
+		 }
+		 .product-disable {
+            position: absolute;
+		    left: 20px;
+		    text-align: center;
+		    top: 25px;
+		    width: 80px;
+		    height: 36px;
+		    background-color: #ff7337;
+		    color: #fff;
+		    z-index: 999;
+        }
+
+        .product-disable-span {
+            padding: 5px;
+            font-weight: bold;
+            font-size: 12px;
+        }
 	    
 	</style>
 </head>
@@ -485,6 +503,7 @@
                             <!-- START DISPLAY PRODUCT -->
                             <div class="product-list row">
 								<c:forEach var="item" items="${products}">
+								<c:if test="${item.getSoLuongTon() > 0}">
                                 <div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp"
                                     data-wow-delay=".2s">
                                     <div class="product-item owl-theme product-listing-carousel owl-carousel">
@@ -511,7 +530,33 @@
                                         <p class="text-center p-item-price">$${item.getGiaBan()}</p>
                                     </div>
                                 </div>
+                                </c:if>
+                                <c:if test="${item.getSoLuongTon() == 0}">
+                                	<div class="col-12 col-md-6 col-lg-4 manage-color-hover wow slideInUp"
+                                    data-wow-delay=".2s">
+                                    <div class="product-item owl-theme product-listing-carousel owl-carousel">
+                                        <div class="item p-item-img">
+                                            <img src="<c:url value="${item.getAnh1()}"/>" alt="images">
+                                            <div class="text-center d-flex justify-content-center align-items-center">
+                                            </div>
+                                        </div>
+                                        <div class="item p-item-img">
+                                            <img src="<c:url value="${item.getAnh2()}"/>" alt="images">
+                                            <div class="text-center d-flex justify-content-center align-items-center">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-disable">
+				                            <span class="product-disable-span">SOLD OUT</span>
+				                        </div> 
+                                    <div class="p-item-detail">
+                                        <h4 class="text-center p-item-name"><a href="detail?id=${item.getMaSach()}"> ${item.getTenSach()}
+                                            </a></h4>
+                                        <p class="text-center p-item-price">$${item.getGiaBan()}</p>
+                                    </div>
+                                </div>
                                 
+                                </c:if>
                                 </c:forEach>
                             </div>
                             <!-- END DISPLAY PRODUCT -->
