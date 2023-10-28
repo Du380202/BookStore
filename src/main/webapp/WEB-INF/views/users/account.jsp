@@ -632,9 +632,16 @@
                                 <span style="margin-right: 20px;">$${donHang.getTongTien() }0</span>
                             </div>
                             <div class="order-action">
+                            <c:if test="${donHang.getStatus() == 1}">
                                 <div class="order-btn-cancel">
                                     <button class="btn-cancel" onclick="confirmDeleteOrder(${donHang.getIdDonHang()});">Hủy Đơn Hàng</button>
                                 </div>
+                             </c:if>
+                             <c:if test="${donHang.getStatus() == 0}">
+                                <div class="order-btn-cancel">
+                                    <button class="btn-cancel" onclick="confirmDeleteOrder(${donHang.getIdDonHang()});">Đặt Lại</button>
+                                </div>
+                             </c:if>
                             </div>
                             </c:forEach>
                           <!--   <div class="order-status">
