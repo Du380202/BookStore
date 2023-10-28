@@ -186,7 +186,7 @@
                                         <div class="dropdown-menu">
                                             <ul>
                                                 <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="list">Listing One</a></li>
-                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="">Detail Page</a></li>
+                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="form">Form Page</a></li>
                                              <c:if test="${empty loggedInUser}">
                                                 <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="signin">ShopCart Page</a></li>
                                              </c:if>

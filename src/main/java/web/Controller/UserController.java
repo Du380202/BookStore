@@ -1,5 +1,6 @@
 package web.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import web.Dao.*;
+import web.Entity.CauTraLoi;
+import web.Entity.CauTraLoi_User;
 import web.Entity.ChiTietDonHang;
 import web.Entity.Sach;
 import web.Entity.Users;
@@ -42,6 +45,9 @@ public class UserController {
 	
 	@Autowired
 	private ProductDao proDao;
+	
+	@Autowired
+	private QuestionDao quesDao;
 	
 	@RequestMapping(value = {"userAccount"}, method=RequestMethod.GET)
 	public String account(ModelMap model, HttpSession session) {
@@ -99,14 +105,52 @@ public class UserController {
 		return "redirect:/userAccount";
 	}
 	
-//	
+	
 //	@RequestMapping("Change")
 //	public String changePass(Model model, HttpSession session, String pass) {
 //		Users user = (Users) session.getAttribute("loggedInUser");
 //		user.setMatKhau(pass);
 //		return "users/account";
 //	}
-//	
+	
+	
+	@RequestMapping("form")
+	public String form(Model model, HttpSession session, String pass) {
+		model.addAttribute("question", quesDao.getQuestionAndAnswer());
+		List<Integer> listAns = new ArrayList<>();
+		model.addAttribute("listAns", listAns);
+		return "users/form";
+	}
+	
+	@RequestMapping(value = {"formAns"}, method=RequestMethod.POST)
+	public String formSave(Model model, HttpServletRequest request, HttpSession s) {
+		Users user = (Users) s.getAttribute("loggedInUser");
+		String q1Answer = request.getParameter("source1");
+		String q2Answer = request.getParameter("source2");
+		String q3Answer = request.getParameter("source3");
+		String q4Answer = request.getParameter("source4");
+		String q5Answer = request.getParameter("source5");
+		String q6Answer = request.getParameter("source6");
+		String q7Answer = request.getParameter("source7");
+		List<Integer> so = new ArrayList<>();
+		 so.add(Integer.valueOf(q1Answer));
+		 so.add(Integer.valueOf(q2Answer));
+		 so.add(Integer.valueOf(q3Answer));
+		 so.add(Integer.valueOf(q4Answer));
+		 so.add(Integer.valueOf(q5Answer));
+		 so.add(Integer.valueOf(q6Answer));
+		 so.add(Integer.valueOf(q7Answer));
+		List<CauTraLoi_User> list = new ArrayList<>();
+		for(int i = 0; i < 7; i++) {
+			CauTraLoi_User tmp = new CauTraLoi_User();
+			tmp.setUserId(user.getMaKH());
+			tmp.setIdCauTraLoi(so.get(i));
+			quesDao.saveAnswer(tmp);
+		}
+		return "users/form";
+	}
+	
+	
 	
 	
 }
