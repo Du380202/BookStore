@@ -100,10 +100,10 @@ public class UserController {
 	    boolean make = orderDao.cancelOrder(id);
 			
 	    if (make == true) { 
-	    	model.addAttribute("deleteSuccess", "Hủy đơn hàng thành công"); 
+	    	model.addAttribute("Success", "Hủy đơn hàng thành công"); 
 	    } 
 		else { 
-			model.addAttribute("deleteError", "Đã xảy ra lỗi"); }
+			model.addAttribute("Error", "Đã xảy ra lỗi"); }
 		return "redirect:/userAccount";
 	}
 	
@@ -112,10 +112,10 @@ public class UserController {
 	    boolean make = orderDao.updateOrder(id);
 			
 	    if (make == true) { 
-	    	model.addAttribute("deleteSuccess", "Đã nhận đơn hàng thành công"); 
+	    	model.addAttribute("Success", "Đã nhận đơn hàng thành công"); 
 	    } 
 		else { 
-			model.addAttribute("deleteError", "Đã xảy ra lỗi"); }
+			model.addAttribute("Error", "Đã xảy ra lỗi"); }
 		return "redirect:/userAccount";
 	}
 	
@@ -136,17 +136,59 @@ public class UserController {
 				sach.setSoLuongTon(sach.getSoLuongTon() - list.get(i).getSoLuong());
 				proDao.updateProduct(sach);
 			}
-			model.addAttribute("deleteSuccess", "Đã đặt đơn hàng thành công"); 
+			model.addAttribute("Success", "Đã đặt đơn hàng thành công"); 
 			
 		}
 		catch (Exception e) {
-			model.addAttribute("deleteError", "Đã xảy ra lỗi"); 
+			model.addAttribute("Error", "Đã xảy ra lỗi"); 
 			t.rollback();
 		}
 		finally {
 			s.close();
 		}
 	    return "redirect:/userAccount";
+	}
+	
+	@RequestMapping(value="reorder/{id}")
+	public String reOrder(ModelMap model,@PathVariable("id") int id, HttpSession session) {
+		Session s = factory.openSession();
+		Transaction t = s.beginTransaction();
+		Users user = (Users) session.getAttribute("loggedInUser");
+		DonHang orderOld = orderDao.getOrderByID(id);
+		DonHang order = new DonHang();
+		List<ChiTietDonHang> list = orderDao.getDataOrderDetail(id);
+		try {
+			order.setNgayDat("" + java.time.LocalDate.now());
+			order.setTongTien(orderOld.getTongTien());
+			order.setUserId(user.getMaKH());
+			order.setTrangThai(1);
+			order.setDiaChi(orderOld.getDiaChi());
+			order.setSdt(orderOld.getSdt());
+			s.save(order);
+			t.commit();	
+			for (int i = 0; i < list.size(); i++) {
+				ChiTietDonHang ctdh = new ChiTietDonHang();
+				Sach sach = proDao.getProductByID(list.get(i).getIdSach());
+				ctdh.setiDDonHang(orderDao.getDataEndOrder().getIdDonHang());
+				ctdh.setIdSach(list.get(i).getIdSach());
+				ctdh.setSoLuong(list.get(i).getSoLuong());
+				ctdh.setGiaBan(list.get(i).getGiaBan());
+				sach.setSoLuongTon(sach.getSoLuongTon() - list.get(i).getSoLuong());
+				orderDao.save(ctdh);
+				proDao.updateProduct(sach);
+			}
+			model.addAttribute("Success", "Đã đặt đơn hàng thành công"); 
+			
+			
+		}
+		catch (Exception e) {
+			model.addAttribute("Error", "Đã xảy ra lỗi"); 
+			t.rollback();
+		}
+		finally {
+			s.close();
+		}
+	    return  "redirect:/userAccount";
 	}
 	
 	

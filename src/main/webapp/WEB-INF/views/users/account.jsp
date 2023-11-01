@@ -659,7 +659,7 @@
                              <c:if test="${donHang.getStatus() == 3}">
                              	
                                 <div class="order-btn-cancel">
-                                    <button class="btn-cancel" onclick="confirmDeleteOrder(${donHang.getIdDonHang()});">Mua Lại</button>
+                                    <button class="btn-cancel" onclick="reOrder(${donHang.getIdDonHang()});">Mua Lại</button>
                                 </div>
                              </c:if>
                             </div>
@@ -991,6 +991,23 @@
 	        });
 	    }
 	</script>
+	<script>
+	    function reOrder(orderId) {
+	        Swal.fire({
+	            title: 'Xác nhận',
+	            text: 'Bạn có chắc chắn muốn đặt lại đơn hàng này?',
+	            icon: 'warning',
+	            showCancelButton: true,
+	            confirmButtonText: 'Xác nhận',
+	            cancelButtonText: 'Hủy bỏ'
+	        }).then((result) => {
+	            if (result.isConfirmed) {
+	                // Nếu người dùng chấp nhận xóa, hãy chuyển họ đến URL xóa sản phẩm
+	                window.location.href = "reorder/" + orderId;
+	            }
+	        });
+	    }
+	</script>
 <!-- JavaScript -->
 <script src="<c:url value="/ASSETS/vendor/js/bundle.min.js"/>"></script>
 <!-- Plugin Js -->
@@ -1047,8 +1064,8 @@
 		
 	<script>
 	    $(document).ready(function() {
-	        var deleteSuccess = getUrlParameter("deleteSuccess");
-	        var deleteError = getUrlParameter("deleteError");
+	        var deleteSuccess = getUrlParameter("Success");
+	        var deleteError = getUrlParameter("Error");
 	        var previousURL = document.referrer;
 	        if (deleteSuccess) {
 	            Swal.fire({
