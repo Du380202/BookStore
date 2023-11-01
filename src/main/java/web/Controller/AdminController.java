@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import web.Dao.*;
 import web.Entity.*;
@@ -76,14 +77,19 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = {"editProduct"})
-	public String editProduct(ModelMap model) {
-		
+	public String editProduct(ModelMap model, @RequestParam("id") int id) {
+		model.addAttribute("edit", proDao.getProductByID(id));
+		model.addAttribute("sach" , new Sach());
+		model.addAttribute("categories", caDao.getDataCategory());
+		model.addAttribute("nxbs", nxbDao.getDataPublisher());
+		model.addAttribute("authors", authorDao.getDataAuthor());
 		return "admin/editProduct";
 	}
 	
-	@RequestMapping(value = {"indexAdmin"})
+	@RequestMapping(value = {"indexAdmin"}, method=RequestMethod.GET)
 	public String indexAdmin(ModelMap model) {
 		model.addAttribute("orders", orderDao.getDataOrder());
+		model.addAttribute("orderDetail", new DonHang());
 		return "admin/index";
 	}
 	
@@ -194,6 +200,22 @@ public class AdminController {
 				 model.addAttribute("deleteError", "Đã xảy ra lỗi"); }
 
 			 return "redirect:/nxbAdmin";
+	}
+	
+	@RequestMapping(value = "indexAdmin", method=RequestMethod.POST)
+	public String deliveryProduct(HttpServletRequest request, ModelMap model, @ModelAttribute("orderDetail") DonHang tmp) {
+		DonHang tmp1 = orderDao.getOrderByID(tmp.getIdDonHang());
+		if (tmp.getNgayGiao() != "") {
+			tmp1.setNgayGiao(tmp.getNgayGiao());
+			tmp1.setTrangThai(2);
+		}
+		boolean make = orderDao.update(tmp1);
+		if (make == true && tmp.getNgayGiao() != "") { 
+			 model.addAttribute("Success", "Vận chuyển đơn hàng thành công!"); 
+		 } 
+		 else { 
+			 model.addAttribute("Error", "Vận chuyển thất bại!!!"); }
+		return "redirect:/indexAdmin";
 	}
 	
 }

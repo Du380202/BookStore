@@ -594,11 +594,15 @@
                        
                          <c:if test="${donHang.getStatus() == 1}">
                          <div class="order-status">
-                                <p class="border-left-status" style="color: #f7941d">Đang giao</p>
+                                <p class="border-left-status" style="color: #f7941d">Đang xử lý</p>
                             </div>
                        </c:if>
-                       
                        <c:if test="${donHang.getStatus() == 2}">
+                         <div class="order-status">
+                                <p class="border-left-status">Đang giao</p>
+                            </div>
+                       </c:if>
+                       <c:if test="${donHang.getStatus() == 3}">
                          <div class="order-status">
                                 <p class="border-left-status">Hoàn thành</p>
                             </div>
@@ -633,51 +637,34 @@
                             </div>
                             <div class="order-action">
                             <c:if test="${donHang.getStatus() == 1}">
+                            	<div class="order-btn-cancel">
+                                    <button class="btn-cancel" style="cursor: not-allowed; background-color: #ccc;color: #666;"   onclick="confirmDeleteOrder(${donHang.getIdDonHang()});">Đã Nhận Hàng</button>
+                                </div>
                                 <div class="order-btn-cancel">
                                     <button class="btn-cancel" onclick="confirmDeleteOrder(${donHang.getIdDonHang()});">Hủy Đơn Hàng</button>
                                 </div>
+                                
                              </c:if>
                              <c:if test="${donHang.getStatus() == 0}">
+                            	
                                 <div class="order-btn-cancel">
-                                    <button class="btn-cancel" onclick="confirmDeleteOrder(${donHang.getIdDonHang()});">Đặt Lại</button>
+                                    <button class="btn-cancel" onclick="resetOrder(${donHang.getIdDonHang()});">Đặt Lại</button>
+                                </div>
+                             </c:if>
+                             <c:if test="${donHang.getStatus() == 2}">
+                             	<div class="order-btn-cancel">
+                                    <button class="btn-cancel" onclick="confirmOrder(${donHang.getIdDonHang()});">Đã Nhận Hàng</button>
+                                </div>
+                             </c:if>
+                             <c:if test="${donHang.getStatus() == 3}">
+                             	
+                                <div class="order-btn-cancel">
+                                    <button class="btn-cancel" onclick="confirmDeleteOrder(${donHang.getIdDonHang()});">Mua Lại</button>
                                 </div>
                              </c:if>
                             </div>
                             </c:forEach>
-                          <!--   <div class="order-status">
-                                <p class="border-left-status">Hoàn thành</p>
-                            </div> -->
-                     
-                        <!--  <div class="order">
-                                
-                                <div class="order-product">
-                                   
-                                    <img class="order-img" src="https://www.netabooks.vn/Data/Sites/1/Product/23855/vu-tru-trong-vo-hat-de-5.jpg" alt="">
-                                   
-                                    <div class="order-name">
-                                        <h5 style="font-size: 16px; line-height: 22px; margin-bottom: 5px" class="order-font">ten san pham</h5>
-                                        <h6 style="font-size: 14px !important;     color: rgba(0,0,0,.54);   margin: 0 0 5px;" class="order-font">phan loai</h6>
-                                        <h6 style="font-size: 14px !important; margin: 0 0 5px;" class="order-font">so luong</h6>
-                                    </div>
-                                    
-                                </div>
-                                <div class="order-price">
-                                    <span style="margin-right: 20px;">$13.00</span>
-                                </div>
-                               
-                                
-                            </div>
-
-                            
-                            <div class="border-order"></div>
-                            <div class="order-totalprice">
-                                <span style="margin-right: 20px;">$94.00</span>
-                            </div>
-                            <div class="order-action">
-                                <div class="order-btn-cancel">
-                                    <button class="btn-cancel">Huy Đơn Hàng</button>
-                                </div>
-                            </div> -->
+                          
                             
                     </div>
 
@@ -969,6 +956,41 @@
 	        });
 	    }
 	</script>
+	<script>
+	    function confirmOrder(orderId) {
+	        Swal.fire({
+	            title: 'Xác nhận',
+	            text: 'Bạn có chắc chắn đã nhận đơn hàng này?',
+	            icon: 'warning',
+	            showCancelButton: true,
+	            confirmButtonText: 'Xác nhận',
+	            cancelButtonText: 'Hủy bỏ'
+	        }).then((result) => {
+	            if (result.isConfirmed) {
+	                // Nếu người dùng chấp nhận xóa, hãy chuyển họ đến URL xóa sản phẩm
+	                window.location.href = "comfirmOrder/" + orderId;
+	            }
+	        });
+	    }
+	</script>
+	
+	<script>
+	    function resetOrder(orderId) {
+	        Swal.fire({
+	            title: 'Xác nhận',
+	            text: 'Bạn có chắc chắn muốn đặt đơn hàng này?',
+	            icon: 'warning',
+	            showCancelButton: true,
+	            confirmButtonText: 'Xác nhận',
+	            cancelButtonText: 'Hủy bỏ'
+	        }).then((result) => {
+	            if (result.isConfirmed) {
+	                // Nếu người dùng chấp nhận xóa, hãy chuyển họ đến URL xóa sản phẩm
+	                window.location.href = "resetOrder/" + orderId;
+	            }
+	        });
+	    }
+	</script>
 <!-- JavaScript -->
 <script src="<c:url value="/ASSETS/vendor/js/bundle.min.js"/>"></script>
 <!-- Plugin Js -->
@@ -1007,7 +1029,7 @@
 	 }
 
  </script>
- <script type="text/javascript">
+ 	<script type="text/javascript">
 			window.onload = function () {
 				document.getElementById("password1").onchange = validatePassword;
 				document.getElementById("password2").onchange = validatePassword;
@@ -1023,7 +1045,7 @@
 			}
 		</script>
 		
-<script>
+	<script>
 	    $(document).ready(function() {
 	        var deleteSuccess = getUrlParameter("deleteSuccess");
 	        var deleteError = getUrlParameter("deleteError");

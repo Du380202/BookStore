@@ -71,6 +71,7 @@ public class CartController {
 			order.setNgayDat("" + java.time.LocalDate.now());
 			order.setTongTien(cartDao.totalPrice(user.getMaKH()));
 			order.setUserId(user.getMaKH());
+			order.setTrangThai(1);
 			
 			s.save(order);
 			t.commit();	
@@ -97,6 +98,8 @@ public class CartController {
 		}
 	    return "users/shopCart";
 	}
+	
+	
 	
 	@RequestMapping (value="AddCart/{id}")
 	public String addCart(HttpServletRequest request ,HttpSession session, @PathVariable int id) {

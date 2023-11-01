@@ -128,6 +128,26 @@ public class OrderDao {
 		
 	}
 	
+	public boolean update(DonHang tacGia) {
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		boolean check = false;
+		try {
+				
+				session.update(tacGia);
+				t.commit();
+				check = true;
+		}
+		catch (Exception e) {
+			check = false;
+			t.rollback();
+		}
+		finally {
+			session.close();
+		}
+		return check;
+	}
+	
 	public void deleteOrderDetail(int id) {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
@@ -154,6 +174,28 @@ public class OrderDao {
  		try {
 				DonHang donHang = getOrderByID(id);
 				donHang.setTrangThai(0);
+				session.update(donHang);
+				t.commit();
+				check = true;
+		}
+		catch (Exception e) {
+			check = false;
+			t.rollback();
+		}
+		finally {
+			session.close();
+		}
+		return check;
+		
+	}
+	
+	public boolean updateOrder(int id) {
+		boolean check = false;
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+ 		try {
+				DonHang donHang = getOrderByID(id);
+				donHang.setTrangThai(3);
 				session.update(donHang);
 				t.commit();
 				check = true;

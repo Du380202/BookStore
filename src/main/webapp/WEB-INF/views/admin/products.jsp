@@ -241,10 +241,12 @@
                 <c:forEach var="item" items="${products}">
                 	<tr>
                     <th scope="row"><input type="checkbox" /></th>
-                    <td class="tm-product-name">${item.getTenSach()}</td>
+                   
+                    <td class="tm-product-name"><a href="editProduct?id=${item.getMaSach()}" style="color: #fff">${item.getTenSach()}</a></td>
                     <td>$${item.getGiaBan()}</td>
                     <td>${item.getSoLuongTon()}</td>
                     <td>28 March 2019</td>
+               
                     <td>
                       <a href="javascript:void(0);" onclick="confirmDeleteProduct(${item.getMaSach()});" class="tm-product-delete-link">
                         <i class="far fa-trash-alt tm-product-delete-icon"></i>
@@ -402,13 +404,13 @@
     <!-- https://jquery.com/download/ -->
     <script src="<c:url value="ASSETS/admin/js/bootstrap.min.js"/>"></script>
     <!-- https://getbootstrap.com/ -->
-    <script>
+   <!--  <script>
       $(function() {
         $(".tm-product-name").on("click", function() {
           window.location.href = "edit-product.html";
         });
       });
-    </script>
+    </script> -->
     <script>
 	    $(document).ready(function() {
 	        var deleteSuccess = getUrlParameter("deleteSuccess");

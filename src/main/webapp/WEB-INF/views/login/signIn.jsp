@@ -43,6 +43,9 @@
 			<div class="form-control agileinfo">	
 				<form:input type="password" class="lock" name="password" placeholder="Password" id="password1" path="matKhau"/>
 			</div>			
+			<div class="form-control w3layouts"> 
+				<p style="text-align: center; color: red;">${messageLogin}</p>
+			</div>
 			
 			<input type="submit" class="register" value="Login">
 		</form:form>

@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="<c:url value="ASSETS/admin/css/bootstrap.min.css"/>"/>
     <!-- https://getbootstrap.com/ -->
     <link rel="stylesheet" href="<c:url value="ASSETS/admin/css/templatemo-style.css"/>"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.5/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="<c:url value="ASSETS/admin/jquery-ui-datepicker/jquery-ui.min.css"/>" type="text/css" />
     <!--
 	Product Admin CSS Template
 	https://templatemo.com/tm-524-product-admin
@@ -128,6 +130,11 @@
         .openAuthor {
             display: flex;
         }
+        
+        .delive {
+		    background-color: #06ebe3;
+		    box-shadow: 0 0 8px #06ebe3, inset 0 0 8px #06ebe3;
+		}
     </style>
 </head>
 
@@ -325,6 +332,7 @@
                                     <th scope="col">DISTANCE</th>
                                     <th scope="col">START DATE</th>
                                     <th scope="col">EST DELIVERY DUE</th>
+                                    <th scope="col">&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -332,14 +340,65 @@
                                 <tr>
                                     <th scope="row"><b>${tmp.getIdDonHang()}</b></th>
                                     <td>
-                                        <div class="tm-status-circle moving">
-                                        </div>${tmp.getNgayDat()}
+                                    
+                                        ${tmp.getNgayDat()}
                                     </td>
-                                    <td><b>${tmp.getNgayGiao()}</b></td>
+                                    
                                     <td><b>${tmp.getSdt()}</b></td>
                                     <td><b>${tmp.getDiaChi()}</b></td>
                                     <td>${tmp.getTongTien()}</td>
-                                    <td>${tmp.getTrangThai()}</td>
+                                    <td>
+                                     <c:if test="${tmp.getTrangThai() == 3}">
+	                                     <div class="tm-status-circle moving">
+                                        </div>
+	                                    Hoàn thành
+                                    </c:if>
+                                    <c:if test="${tmp.getTrangThai() == 2}">
+	                                    <div class="tm-status-circle delive">
+                                        </div>
+	                                    Đang giao
+                                    </c:if>
+                                    <c:if test="${tmp.getTrangThai() == 1}">
+	                                    <div class="tm-status-circle pending">
+                                        </div>
+	                                    Đang xử lý
+                                    </c:if>
+                                    <c:if test="${tmp.getTrangThai() == 0}">
+	                                    <div class="tm-status-circle cancelled">
+	                                        </div>
+	                                    Đã hủy
+                                    </c:if>
+                                    </td>
+                                    <form:form action="indexAdmin" modelAttribute="orderDetail">
+                                    <td><b><form:input path="ngayGiao" type="text" style="width: 130px" class="form-control" id="expire_date_${tmp.getIdDonHang()}" 
+                                    value="${tmp.getNgayGiao()}"/></b>
+                                     <form:hidden path="idDonHang" value="${tmp.getIdDonHang()}" /> </td>
+                                    <td class="js-clickable-td">
+                                    <c:if test="${tmp.getTrangThai() == 0}">
+				                      <button type="submit" class="js-btn-author tm-product-delete-link"  style="border: none;color:#da534f;">
+				                        <i class="fas fa-times"></i>
+				                      </button>
+				                     </c:if>
+				                     
+				                     <c:if test="${tmp.getTrangThai() == 1}">
+				                      <button type="submit" class="js-btn-author tm-product-delete-link"  style="border: none;">
+				                        <i class="fas fa-shipping-fast"></i>
+				                      </button>
+				                     </c:if>
+				                     <c:if test="${tmp.getTrangThai() == 2}">
+				                      <button type="submit" class="js-btn-author tm-product-delete-link"  style="border: none; color:#9be64d;">
+				                        <i class="fas fa-shipping-fast"></i>
+				                      </button>
+				                     </c:if>
+				                     
+				                     <c:if test="${tmp.getTrangThai() == 3}">
+				                      <button class="js-btn-author tm-product-delete-link"  style="border: none;color:#9be64d;cursor: not-allowed;">
+				                        <i class="fas fa-check"></i>
+				                        
+				                      </button>
+				                     </c:if>
+				                    </td>
+				                    </form:form>
                                 </tr>
                                 </c:forEach>
                             </tbody>
@@ -351,14 +410,14 @@
         <footer class="tm-footer row tm-mt-small">
             <div class="col-12 font-weight-light">
                 <p class="text-center text-white mb-0 px-4 small">
-                    Copyright &copy; <b>2018</b> All rights reserved. 
+                   
                     
-                    Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
+                    <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link"></a>
                 </p>
             </div>
         </footer>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.5/dist/sweetalert2.all.min.js"></script>
     <script src="<c:url value="ASSETS/admin/js/jquery-3.3.1.min.js"/>"></script>
 
     <script src="<c:url value="ASSETS/admin/js/moment.min.js"/>"></script>
@@ -368,6 +427,7 @@
     <script src="<c:url value="ASSETS/admin/js/bootstrap.min.js"/>"></script>
     <!-- https://getbootstrap.com/ -->
     <script src="<c:url value="ASSETS/admin/js/tooplate-scripts.js"/>"></script>
+    <script src="<c:url value="ASSETS/admin/jquery-ui-datepicker/jquery-ui.min.js"/>"></script>
     <script>
         Chart.defaults.global.defaultFontColor = 'white';
         let ctxLine,
@@ -393,6 +453,45 @@
             });
         })
     </script>
+     <script>
+     $(function () {
+    	    $("[id^='expire_date_']").each(function() {
+    	        var id = this.id;
+    	        $(this).datepicker({
+    	            changeMonth: true, // Cho phép chọn tháng
+    	            changeYear: true, // Cho phép chọn năm
+    	            yearRange: "1900:2025", // Phạm vi năm bạn muốn cho phép
+    	        });
+    	    });
+    	});
+ </script>
+ <script>
+	    $(document).ready(function() {
+	        var deleteSuccess = getUrlParameter("Success");
+	        var deleteError = getUrlParameter("Error");
+	        var previousURL = document.referrer;
+	        if (deleteSuccess) {
+	            Swal.fire({
+	                icon: "success",
+	                title: "Thông báo",
+	                text: decodeURIComponent(deleteSuccess),
+	            });
+	        } else if (deleteError) {
+	            Swal.fire({
+	                icon: "error",
+	                title: "Thông báo",
+	                text: decodeURIComponent(deleteError),
+	            });
+	        }
+	    });
+	
+	    function getUrlParameter(name) {
+	        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+	        var results = regex.exec(location.search);
+	        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	    }
+	 </script>
 </body>
 
 </html>

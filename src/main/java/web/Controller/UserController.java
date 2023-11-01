@@ -22,6 +22,8 @@ import web.Dao.*;
 import web.Entity.CauTraLoi;
 import web.Entity.CauTraLoi_User;
 import web.Entity.ChiTietDonHang;
+import web.Entity.ChiTietGioHang;
+import web.Entity.DonHang;
 import web.Entity.Sach;
 import web.Entity.Users;
 
@@ -103,6 +105,48 @@ public class UserController {
 		else { 
 			model.addAttribute("deleteError", "Đã xảy ra lỗi"); }
 		return "redirect:/userAccount";
+	}
+	
+	@RequestMapping(value = "comfirmOrder/{id}")
+	public String comfirmOrder(HttpServletRequest request, ModelMap model, @PathVariable("id") int id) {
+	    boolean make = orderDao.updateOrder(id);
+			
+	    if (make == true) { 
+	    	model.addAttribute("deleteSuccess", "Đã nhận đơn hàng thành công"); 
+	    } 
+		else { 
+			model.addAttribute("deleteError", "Đã xảy ra lỗi"); }
+		return "redirect:/userAccount";
+	}
+	
+	@RequestMapping(value="resetOrder/{id}")
+	public String saveOrder(ModelMap model,@PathVariable("id") int id, HttpSession session) {
+		Session s = factory.openSession();
+		Transaction t = s.beginTransaction();
+		Users user = (Users) session.getAttribute("loggedInUser");
+		DonHang order = orderDao.getOrderByID(id);
+		List<ChiTietDonHang> list = orderDao.getDataOrderDetail(id);
+		try {
+			order.setTrangThai(1);
+			
+			s.update(order);
+			t.commit();	
+			for (int i = 0; i < list.size(); i++) {
+				Sach sach = proDao.getProductByID(list.get(i).getIdSach());
+				sach.setSoLuongTon(sach.getSoLuongTon() - list.get(i).getSoLuong());
+				proDao.updateProduct(sach);
+			}
+			model.addAttribute("deleteSuccess", "Đã đặt đơn hàng thành công"); 
+			
+		}
+		catch (Exception e) {
+			model.addAttribute("deleteError", "Đã xảy ra lỗi"); 
+			t.rollback();
+		}
+		finally {
+			s.close();
+		}
+	    return "redirect:/userAccount";
 	}
 	
 	
