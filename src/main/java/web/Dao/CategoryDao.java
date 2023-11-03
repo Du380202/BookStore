@@ -34,7 +34,14 @@ public class CategoryDao {
 		TheLoai product = (TheLoai) query.uniqueResult();
 		return product;
 	}
-
+	
+	public TheLoai getCategoryByLabel(String id) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM TheLoai WHERE Label = '" + id + "'";
+		Query query = session.createQuery(hql);
+		TheLoai product = (TheLoai) query.uniqueResult();
+		return product;
+	}
 	public boolean save(TheLoai theLoai) {
 		boolean check = false;
 		Session session = factory.openSession();

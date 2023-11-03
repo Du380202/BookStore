@@ -26,7 +26,7 @@
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"/>
    	
    	<!-- Cấu hình package chứa các controller -->
-	<context:component-scan base-package="web.Controller, web.Dao"/>
+	<context:component-scan base-package="web.Controller, web.Dao, web.Bean"/>
 	
 
 </beans>

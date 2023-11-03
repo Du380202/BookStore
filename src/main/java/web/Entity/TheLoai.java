@@ -15,6 +15,15 @@ public class TheLoai {
 	private String idTheLoai;
 	@Column(name = "TenTheLoai")
 	private String tenTheLoai;
+	
+	@Column(name = "Label")
+	private String label;
+	public String getLabel() {
+		return label;
+	}
+	public void setLabel(String label) {
+		this.label = label;
+	}
 	public String getIdTheLoai() {
 		return idTheLoai;
 	}
@@ -27,7 +36,4 @@ public class TheLoai {
 	public void setTenTheLoai(String tenTheLoai) {
 		this.tenTheLoai = tenTheLoai;
 	}
-	
-	
-
 }

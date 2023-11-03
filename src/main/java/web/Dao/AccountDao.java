@@ -1,5 +1,7 @@
 package web.Dao;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.hibernate.Query;
@@ -25,4 +27,12 @@ public class AccountDao {
 		return user;
 	}
 
+	public List<Users> getDataUser() {
+		Session s = factory.getCurrentSession();
+		String hql = "FROM Users";
+		Query q = s.createQuery(hql);
+		@SuppressWarnings("unchecked")
+		List<Users> sach = q.list();
+		return sach;
+	}
 }

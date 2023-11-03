@@ -51,7 +51,7 @@ public class ProductController {
 		model.addAttribute("comment", new DanhGia());
 		model.addAttribute("categories", categoryDao.getDataCategory());
         model.addAttribute("author", authorDao.getDataAuthor());
-        List<Sach> products = product.getDataProduct();
+        List<Sach> products = product.getDataNew();
         model.addAttribute("productNew", products);
 		return "users/bookDetail";
 	}
@@ -83,10 +83,9 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = {"list"})
-	public String bookList(ModelMap model, @RequestParam(defaultValue = "1") int currentPage) {
+	public String bookList(ModelMap model, @RequestParam(defaultValue = "1") int currentPage, HttpSession s) {
 		int pageSize = 9;
 	    int startRow = (currentPage - 1) * pageSize;
-
 	    List<Sach> products;
 	    int totalPage;
 	    products = product.getDataProductpagin(currentPage, pageSize, startRow);
@@ -97,6 +96,8 @@ public class ProductController {
 		model.addAttribute("totalPage", totalPage);
 	    model.addAttribute("currentPage", currentPage);
 	    model.addAttribute("products", products);
+	    List<Sach> productss = product.getDataNew();
+        model.addAttribute("productNew", productss);
 		return "users/bookList";
 	}
 	
@@ -116,6 +117,8 @@ public class ProductController {
 		model.addAttribute("totalPage", totalPage);
 	    model.addAttribute("currentPage", currentPage);
 	    model.addAttribute("products", products);
+	    List<Sach> productss = product.getDataNew();
+        model.addAttribute("productNew", productss);
 		return "users/bookList";
 	}
 	
@@ -135,6 +138,8 @@ public class ProductController {
 		model.addAttribute("totalPage", totalPage);
 	    model.addAttribute("currentPage", currentPage);
 	    model.addAttribute("products", products);
+	    List<Sach> productss = product.getDataNew();
+        model.addAttribute("productNew", productss);
 		return "users/bookList";
 	}
 	

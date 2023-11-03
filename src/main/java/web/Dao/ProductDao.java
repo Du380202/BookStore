@@ -31,7 +31,15 @@ public class ProductDao {
 		List<Sach> sach = q.list();
 		return sach;
 	}
-	
+	public List<Sach> getDataNew() {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM Sach ORDER BY IDSach ASC";
+		Query query = session.createQuery(hql);
+		query.setMaxResults(9);
+		@SuppressWarnings("unchecked")
+		List<Sach> products = query.list();
+		return products;
+	}
 	public List<Sach> getDataByKeyWord(String key) {
 		Session session = factory.getCurrentSession();
 		String hql = "From Sach where TieuDe like :keyword";

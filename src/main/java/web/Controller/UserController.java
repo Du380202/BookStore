@@ -1,5 +1,10 @@
 package web.Controller;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +25,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import web.Dao.*;
 import web.Entity.CauTraLoi;
-import web.Entity.CauTraLoi_User;
+import web.Entity.User_CauTraLoi;
 import web.Entity.ChiTietDonHang;
 import web.Entity.ChiTietGioHang;
 import web.Entity.DonHang;
 import web.Entity.Sach;
+import web.Entity.TheLoai;
 import web.Entity.Users;
 
 @Controller
@@ -51,6 +57,9 @@ public class UserController {
 	@Autowired
 	private QuestionDao quesDao;
 	
+	@Autowired
+	private UserDao userDao;
+	
 	@RequestMapping(value = {"userAccount"}, method=RequestMethod.GET)
 	public String account(ModelMap model, HttpSession session) {
 		Users user = (Users) session.getAttribute("loggedInUser");
@@ -58,6 +67,8 @@ public class UserController {
 		model.addAttribute("author", authorDao.getDataAuthor());
 		model.addAttribute("account", accountDao.getDataById(user.getMaKH()));
 		model.addAttribute("orders", orderDao.getOrderByUser(user.getMaKH()));
+		List<Sach> productss = proDao.getDataNew();
+        model.addAttribute("productNew", productss);
 		return "users/account";
 	}
 	
@@ -226,17 +237,77 @@ public class UserController {
 		 so.add(Integer.valueOf(q5Answer));
 		 so.add(Integer.valueOf(q6Answer));
 		 so.add(Integer.valueOf(q7Answer));
-		List<CauTraLoi_User> list = new ArrayList<>();
+		 List<User_CauTraLoi> list = quesDao.getDataUserAnswer(user.getMaKH());
 		for(int i = 0; i < 7; i++) {
-			CauTraLoi_User tmp = new CauTraLoi_User();
-			tmp.setUserId(user.getMaKH());
-			tmp.setIdCauTraLoi(so.get(i));
-			quesDao.saveAnswer(tmp);
+			if(list.size() == 0) {
+				CauTraLoi tmp = quesDao.getDataAnswerById(so.get(i));
+				User_CauTraLoi x = new User_CauTraLoi();
+				x.setIdCauTraLoi(tmp.getIdCauTraLoi());
+				x.setUserId(user.getMaKH());
+				x.setStt(tmp.getStt());
+				quesDao.saveAnswer(x);
+			}
+			else {
+				for (int j = 0; j < list.size(); j++) {
+					quesDao.deleteAnswer(list.get(i));
+				}
+				CauTraLoi tmp = quesDao.getDataAnswerById(so.get(i));
+				User_CauTraLoi x = new User_CauTraLoi();
+				x.setIdCauTraLoi(tmp.getIdCauTraLoi());
+				x.setUserId(user.getMaKH());
+				x.setStt(tmp.getStt());
+				quesDao.saveAnswer(x);
+			}
 		}
-		return "users/form";
+		list = quesDao.getDataUserAnswer(user.getMaKH());
+		String content = "";
+		for (int i = 0; i < list.size(); i++) {
+			content += list.get(i).getStt() + " ";
+		}
+		String fileName = "D:\\\\Web\\\\BookStore\\\\src\\\\main\\\\java\\\\userAnswer.txt";
+		String fileName1 = "D:\\\\Web\\\\BookStore\\\\src\\\\main\\\\java\\\\ketQuaDeXuat.txt";
+		write(fileName, content);
+		// ghi kết quả xuống file trước
+		// sau khi chạy Excute đọc kết quả lên rồi hiểu thị kết quả
+		try {
+            ExcutePyFile.main(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		String kq = read(fileName1);
+		user.setDeXuat(kq);
+		userDao.update(user);
+		TheLoai tmp = categoryDao.getCategoryByLabel(kq);
+		model.addAttribute("recoment", tmp.getIdTheLoai());
+		return "users/formSubmit";
 	}
 	
+	public void write(String fileName, String content) {
+		 try {
+	            FileWriter writer = new FileWriter(fileName, false); // Sử dụng `false` để ghi đè (overwrite) lên tệp
+	            writer.write(content);
+	            writer.close();
+	            System.out.println("Ghi dữ liệu vào tệp sau khi xóa thành công.");
+	        } catch (IOException e) {
+	            System.err.println("Lỗi khi ghi dữ liệu vào tệp: " + e.getMessage());
+	        }
+	}
 	
-	
-	
+	public String read(String fileName) {
+		String s = null ;
+		try {
+            // Tạo đối tượng BufferedReader để đọc tệp
+            BufferedReader br = new BufferedReader(new FileReader(fileName));
+            String dong ;
+            while ((dong = br.readLine()) != null) {
+                // Đọc từng dòng trong tệp và xử lý nó tại đây
+                s = dong;
+            }
+
+            br.close(); // Đóng tệp sau khi đọc xong
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		return s;
+	}
 }

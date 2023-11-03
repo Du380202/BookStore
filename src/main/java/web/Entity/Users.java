@@ -33,6 +33,14 @@ public class Users {
 	private String avatar;
 	@Column(name = "RoleID")
 	private int roleID;
+	@Column(name = "DeXuat")
+	private String deXuat;
+	public String getDeXuat() {
+		return deXuat;
+	}
+	public void setDeXuat(String deXuat) {
+		this.deXuat = deXuat;
+	}
 	public int getRoleID() {
 		return roleID;
 	}

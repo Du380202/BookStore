@@ -7,10 +7,12 @@ import javax.transaction.Transactional;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import web.Entity.DonHang;
 import web.Entity.Sach;
 import web.Entity.Users;
 
@@ -45,5 +47,21 @@ public class UserDao {
         }
         return false;
     }
+	
+	public void update(Users tacGia) {
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		try {
+				
+				session.update(tacGia);
+				t.commit();
+		}
+		catch (Exception e) {
+			t.rollback();
+		}
+		finally {
+			session.close();
+		}
+	}
 	
 }

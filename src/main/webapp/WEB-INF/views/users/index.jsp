@@ -141,12 +141,9 @@
                                                         <div class="col-lg-3 col-md-6 col-sm-12 mengmenu_border">
                                                             <h5 class="dropdown-title"> Most Wanted </h5>
                                                             <ul>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="book-shop\product-listing.html">Love Does</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="book-shop\product-listing.html">No One Belongs</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="book-shop\product-listing.html">As I Lay Dying</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="book-shop\product-listing.html">Life is Elsewhere</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="book-shop\product-listing.html">The Road</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="book-shop\product-listing.html">Why Me?</a></li>
+                                                            <c:forEach var="item" items="${productNew}">
+                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="detail?id=${item.getMaSach()}">${item.getTenSach()}</a></li>
+                                                              </c:forEach>
                                                             </ul>
                                                             
                                                         </div>
@@ -186,7 +183,12 @@
                                         <div class="dropdown-menu">
                                             <ul>
                                                 <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="list">Listing One</a></li>
+                                                <c:if test="${empty loggedInUser}">
+                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="signin">Form Page</a></li>
+                                             	</c:if>
+                                             	<c:if test="${not empty loggedInUser}">
                                                 <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="form">Form Page</a></li>
+                                             	</c:if>
                                              <c:if test="${empty loggedInUser}">
                                                 <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="signin">ShopCart Page</a></li>
                                              </c:if>

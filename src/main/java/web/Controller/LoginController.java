@@ -78,4 +78,8 @@ public class LoginController {
 	    return "redirect:/home";
 	}
 	
+	@RequestMapping(value="resetPass" ) 
+	public String reset(ModelMap model) {
+		return "redirect:/signin";
+	}
 }

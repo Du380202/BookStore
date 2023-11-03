@@ -25,7 +25,7 @@ public class HomeController {
 	
 	@RequestMapping(value = {"/", "home"})
 	public String index(ModelMap model) {
-		List<Sach> products = productDao.getDataProduct();
+		List<Sach> products = productDao.getDataNew();
         model.addAttribute("productNew", products);
         model.addAttribute("author", authorDao.getDataAuthor());
         model.addAttribute("categories", categoryDao.getDataCategory());

@@ -14,6 +14,14 @@ public class CauTraLoi {
 	private Integer idCauHoi;
 	@Column(name = "CauTraLoi")
 	private String cauTraLoi;
+	@Column(name = "stt")
+	private Integer stt;
+	public Integer getStt() {
+		return stt;
+	}
+	public void setStt(Integer stt) {
+		this.stt = stt;
+	}
 	public Integer getIdCauTraLoi() {
 		return idCauTraLoi;
 	}

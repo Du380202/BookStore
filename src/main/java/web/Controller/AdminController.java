@@ -29,7 +29,8 @@ public class AdminController {
 	
 	@Autowired
 	private OrderDao orderDao;
-	
+	@Autowired
+	private AccountDao accountDao;
 	@Autowired
 	private NXBDao nxbDao;
 	
@@ -38,7 +39,7 @@ public class AdminController {
 	
 	@RequestMapping(value = {"accounts"})
 	public String accounts(ModelMap model) {
-		
+		model.addAttribute("accounts", accountDao.getDataUser());
 		return "admin/accounts";
 	}
 	

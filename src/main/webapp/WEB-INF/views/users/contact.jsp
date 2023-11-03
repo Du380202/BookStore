@@ -119,13 +119,10 @@
                                                     <div class="row">
                                                         <div class="col-lg-3 col-md-6 col-sm-12 mengmenu_border">
                                                             <h5 class="dropdown-title"> Most Wanted </h5>
-                                                            <ul>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="book-shop\product-listing.html">Love Does</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="book-shop\product-listing.html">No One Belongs</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="book-shop\product-listing.html">As I Lay Dying</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="book-shop\product-listing.html">Life is Elsewhere</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="book-shop\product-listing.html">The Road</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="book-shop\product-listing.html">Why Me?</a></li>
+                                                          <ul>
+                                                                <c:forEach var="item" items="${productNew}">
+                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="detail?id=${item.getMaSach()}">${item.getTenSach()}</a></li>
+                                                              </c:forEach>
                                                             </ul>
                                                             
                                                         </div>
@@ -163,10 +160,21 @@
                                     <li class="nav-item dropdown position-relative">
                                         <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PAGES</a>
                                         <div class="dropdown-menu">
-                                            <ul>
-                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-listing.html">Listing One</a></li>
-                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="product-detail.html">Detail Page</a></li>
-                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="shop-cart.html">ShopCart Page</a></li>
+                                             <ul>
+                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="list">Listing One</a></li>
+                                                <c:if test="${empty loggedInUser}">
+                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="signin">Form Page</a></li>
+                                             	</c:if>
+                                             	<c:if test="${not empty loggedInUser}">
+                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="form">Form Page</a></li>
+                                             	</c:if>
+                                             <c:if test="${empty loggedInUser}">
+                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="signin">ShopCart Page</a></li>
+                                             </c:if>
+                                             
+                                             <c:if test="${not empty loggedInUser}">
+                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="shopCart">ShopCart Page</a></li>
+                                             </c:if>
                                             </ul>
                                         </div>
                                     </li>
@@ -395,8 +403,9 @@
             <div class="col-12 col-lg-6 contact-box text-center text-md-left wow slideInRight" data-wow-delay=".8s">
                 <div class="c-box wow fadeInRight">
                     <h4 class="small-heading">Leave Message</h4>
+                    <p>${messageC}</p>
 <!--                        <p class="small-text">Lorem ipsum is simply dummy text of the printing and typesetting industry. </p>-->
-                    <form class="contact-form" id="contact-form-data">
+                    <form action="send" method="post" class="contact-form" id="contact-form-data">
                         <div class="row my-form">
                             <div class="col-md-12 col-sm-12">
                                 <div id="result"></div>
@@ -417,7 +426,7 @@
                                 <textarea class="form-control" id="user_message" name="userMessage" placeholder="Message" rows="7" required="required"></textarea>
                             </div>
                             <div class="col-12">
-                                <button class="btn green-color-yellow-gradient-btn user-contact contact_btn" type="button">SUBMIT
+                                <button class="btn green-color-yellow-gradient-btn user-contact " type="submit">SUBMIT
                                 </button>
                             </div>
                         </div>

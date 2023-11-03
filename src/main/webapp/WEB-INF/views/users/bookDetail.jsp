@@ -157,12 +157,9 @@
                                                         <div class="col-lg-3 col-md-6 col-sm-12 mengmenu_border">
                                                             <h5 class="dropdown-title"> Most Wanted </h5>
                                                             <ul>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="book-shop\product-listing.html">Love Does</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="book-shop\product-listing.html">No One Belongs</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="book-shop\product-listing.html">As I Lay Dying</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="book-shop\product-listing.html">Life is Elsewhere</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="book-shop\product-listing.html">The Road</a></li>
-                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="book-shop\product-listing.html">Why Me?</a></li>
+                                                                <c:forEach var="item" items="${productNew}">
+                                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="detail?id=${item.getMaSach()}">${item.getTenSach()}</a></li>
+                                                              </c:forEach>
                                                             </ul>
                                                             
                                                         </div>
@@ -203,20 +200,21 @@
                                                 aria-expanded="false">PAGES</a>
                                             <div class="dropdown-menu">
                                                 <ul>
-                                                    <li><i class="lni-angle-double-right right-arrow"></i><a
-                                                            class="dropdown-item" href="list">Listing
-                                                            One</a></li>
-                                                    <li><i class="lni-angle-double-right right-arrow"></i><a
-                                                            class="dropdown-item" href="list">Detail
-                                                            Page</a></li>
-                                                     <c:if test="${empty loggedInUser}">
-		                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="signin">ShopCart Page</a></li>
-		                                             </c:if>
-		                                             
-		                                             <c:if test="${not empty loggedInUser}">
-		                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="shopCart">ShopCart Page</a></li>
-		                                             </c:if>
-                                                </ul>
+                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="list">Listing One</a></li>
+                                                <c:if test="${empty loggedInUser}">
+                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="signin">Form Page</a></li>
+                                             	</c:if>
+                                             	<c:if test="${not empty loggedInUser}">
+                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="form">Form Page</a></li>
+                                             	</c:if>
+                                             <c:if test="${empty loggedInUser}">
+                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="signin">ShopCart Page</a></li>
+                                             </c:if>
+                                             
+                                             <c:if test="${not empty loggedInUser}">
+                                                <li><i class="lni-angle-double-right right-arrow"></i><a class="dropdown-item" href="shopCart">ShopCart Page</a></li>
+                                             </c:if>
+                                            </ul>
                                             </div>
                                         </li>
                                         <li class="nav-item">
@@ -520,9 +518,13 @@
                             <div class="product-tags-list">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><p class="d-inline">SKU: <span>00012</span></p></li>
-                                        <li class="breadcrumb-item"><span class="d-inline">Categories: <a href="javascript:void(0)">Classic</a><span class="comma-separtor">,</span><a href="javascript:void(0)">Fantasy</a></span></li>
-                                        <li class="breadcrumb-item" aria-current="page"><p class="d-inline">Tags: <a href="javascript:void(0)">Fantasy</a><span class="comma-separtor">,</span><a href="javascript:void(0)">Classic</a></p></li>
+                                    <c:forEach var="item" items="${categories}">
+							        	<c:if test="${productDetail.getMaTheLoai() == item.getIdTheLoai()}">
+							        	<li class="breadcrumb-item"><p class="d-inline">SKU: <span>${productDetail.getMaSach() }</span></p></li>
+                                        <li class="breadcrumb-item"><span class="d-inline">Categories: <a href="javascript:void(0)">${item.getTenTheLoai()}</a><span class="comma-separtor"></li>
+								        </c:if>
+							        </c:forEach>
+                                        
                                     </ol>
                                 </nav>
                             </div>

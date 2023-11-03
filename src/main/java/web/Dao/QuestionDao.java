@@ -39,6 +39,13 @@ public class QuestionDao {
 		return listAns;
 	}
 	
+	public CauTraLoi getDataAnswerById(int id) {
+		Session s = factory.getCurrentSession();
+		String hql = "FROM CauTraLoi where IDCauTraLoi = " + id;
+		Query q = s.createQuery(hql);
+		CauTraLoi listAns = (CauTraLoi) q.uniqueResult();
+		return listAns;
+	}
 	public List<QuestionAnswerDto> getQuestionAndAnswer() {
 		List<QuestionAnswerDto> listQA = new ArrayList<>();
 		
@@ -55,11 +62,36 @@ public class QuestionDao {
 		return listQA;
 	}
 	
-	public void saveAnswer(CauTraLoi_User ansUser) {
+	public List<User_CauTraLoi> getDataUserAnswer(int id) {
+		Session s = factory.getCurrentSession();
+		String hql = "FROM User_CauTraLoi where UserID = " + id;
+		Query q = s.createQuery(hql);
+		@SuppressWarnings("unchecked")
+		List<User_CauTraLoi> listAns = q.list();
+		return listAns;
+	}
+	
+	public void saveAnswer(User_CauTraLoi ansUser) {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
 		try {
 				session.save(ansUser);
+				t.commit();
+		}
+		catch (Exception e) {
+			t.rollback();
+		}
+		finally {
+			session.close();
+		}
+		
+	}
+	
+	public void deleteAnswer(User_CauTraLoi ansUser) {
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		try {
+				session.delete(ansUser);
 				t.commit();
 		}
 		catch (Exception e) {

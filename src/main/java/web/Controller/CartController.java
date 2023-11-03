@@ -57,6 +57,8 @@ public class CartController {
 		model.addAttribute("donhang", new DonHang());
 		model.addAttribute("cartView", cartDao.getCartByUser(user.getMaKH()));
 		model.addAttribute("TotalPrice", cartDao.totalPrice(user.getMaKH()));
+		List<Sach> productss = productDao.getDataNew();
+        model.addAttribute("productNew", productss);
 		return "users/shopCart";
 	}
 	

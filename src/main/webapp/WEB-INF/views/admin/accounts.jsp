@@ -124,22 +124,23 @@
                             <th scope="col">HỌ TÊN</th>
                             <th scope="col">NGÀY SINH</th>
                             <th scope="col">EMAIL</th>
-                            <th scope="col">SỐ ĐIỆN THOẠI</th>
+                            <th scope="col">ĐIỆN THOẠI</th>
                             <th scope="col">ĐỊA CHỈ</th>
                         </tr>
                     </thead>
                     <tbody>
+                    <c:forEach var="item" items="${accounts}">
                         <tr>
-                            <th scope="row"><b>dutran123</b></th>
+                            <th scope="row"><b>${item.getUserName()}</b></th>
                             <td>
-                                <b>Trần Du</b>
+                                <b>${item.getHoTen()}</b>
                             </td>
-                            <td><b>03/08/2002</b></td>
-                            <td><b>trandu3802@gmail.com</b></td>
-                            <td><b>0337873884</b></td>
-                            <td>Dak Song, Đăk Nông</td>
+                            <td><b>${item.getNgaySinh()}</b></td>
+                            <td><b>${item.getEmail()}</b></td>
+                            <td><b>${item.getsDT()}</b></td>
+                            <td>${item.getDiaChi()}</td>
                         </tr>
-                        
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>
