@@ -298,7 +298,7 @@
                                 </a>
                             </li>
                             <li class="d-inline-block mini-menu-card">
-                                <a class="nav-link" id="add_cart_box" href="javascript:void(0)">
+                                <a class="nav-link" id="add_cart_box" href="shopCart">
                                     <i class="lni lni-shopping-basket"></i>
                                 </a>
                             </li>
