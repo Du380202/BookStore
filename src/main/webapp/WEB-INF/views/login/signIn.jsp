@@ -47,7 +47,8 @@
 				<p style="text-align: center; color: red;">${messageLogin}</p>
 			</div>
 			
-			<input type="submit" class="register" value="Login">
+			<input type="submit" class="register" style="margin-bottom: 10px" value="Login">
+			<p style="padding-left: 95px;color: white; margin-top: 5px; margin-bottom: 30px; font-size: 14px"><a style="color: #00b9ff;" href="resetPassword">Quên mật khẩu</a></p>
 		</form:form>
 		<script type="text/javascript">
 			window.onload = function () {
@@ -64,13 +65,15 @@
 					//empty string means no validation error
 			}
 		</script>
-		<p class="wthree w3l"><a href="signup">Sign Up</a></p>
+		
+		
 		<ul class="social-agileinfo wthree2">
 			<li><a href="#"><i class="fa fa-facebook"></i></a></li>
 			<li><a href="#"><i class="fa fa-youtube"></i></a></li>
 			<li><a href="#"><i class="fa fa-twitter"></i></a></li>
 			<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
 		</ul>
+		<p style="text-align: center; color: white; margin-top: 30px">Bạn chưa có tài khoản? <a href="signup" style=" color: #00b9ff;font-weight: bold;">Tạo tài khoản</a></p>
 	</div>
 	<div class="clear"></div>
 </div>

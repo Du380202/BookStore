@@ -447,8 +447,8 @@
                                         <img class="avatar" src="<c:url value="${loggedInUser.getAvatar()}"/>" alt=""></a>
                                         <div class="dropdown-menu">
                                             <ul>
-                                                <li><a class="dropdown-item" href="book-shop\product-listing.html">Account</a></li>
-                                                <li><a class="dropdown-item" href="book-shop/shop-cart.html.html">Log out</a></li>
+                                                <li><a class="dropdown-item" href="userAccount">Account</a></li>
+                                                <li><a class="dropdown-item" href="logout">Log out</a></li>
                                             </ul>
                                         </div>
                   							
@@ -541,24 +541,26 @@
 	                    </form:form>
                     </div>
                     <div class="tab-pane fade" id="account-change-password">
+                   		<form action="change">
                         <div class="card-body pb-2">
                             <div class="form-group">
                                 <label class="form-label">Current password</label>
-                                <input type="password"  class="form-control">
+                                <input type="password" name="pass1"  class="form-control">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">New password</label>
-                                <input type="password" id="password1" class="form-control">
+                                <input type="password" name="pass2" id="password1" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Repeat new password</label>
-                                <input type="password" id="password1" class="form-control">
+                                <input type="password" name="pass3" id="password1" class="form-control">
                             </div>
                         </div>
                         <div class="col-12" style="display: flex; justify-content: flex-end">
 	                          <button  class="btn green-color-yellow-gradient-btn user-contact contact_btn"  type="submit">SAVE
 	                         </button>
 	                    </div>
+	                    </form>
                     </div>
                     
                     <div class="tab-pane fade" id="account-social-links">

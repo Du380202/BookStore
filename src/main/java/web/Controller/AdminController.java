@@ -77,7 +77,7 @@ public class AdminController {
 		return "admin/addProduct";
 	}
 	
-	@RequestMapping(value = {"editProduct"})
+	@RequestMapping(value = {"editProduct"}, method=RequestMethod.GET)
 	public String editProduct(ModelMap model, @RequestParam("id") int id) {
 		model.addAttribute("edit", proDao.getProductByID(id));
 		model.addAttribute("sach" , new Sach());
@@ -85,6 +85,23 @@ public class AdminController {
 		model.addAttribute("nxbs", nxbDao.getDataPublisher());
 		model.addAttribute("authors", authorDao.getDataAuthor());
 		return "admin/editProduct";
+	}
+	
+	@RequestMapping(value = {"editProduct"}, method=RequestMethod.POST)
+	public String editProduct(ModelMap model, @ModelAttribute("sach") Sach sach, @RequestParam(value="mota",  required=false) String from) {
+		Sach s = proDao.getProductByID(sach.getMaSach());
+		s.setTenSach(sach.getTenSach());
+		s.setGiaBan(sach.getGiaBan());
+		s.setMoTa(from);
+		s.setSoLuongTon(sach.getSoLuongTon());
+		boolean check = proDao.updatep(s);
+		if (check == true) {
+			model.addAttribute("Success", "Cập nhật thành công");
+		}
+		else {
+			model.addAttribute("Error", "Cập nhật thất bại");
+		}
+		return "redirect:/productAdmin";
 	}
 	
 	@RequestMapping(value = {"indexAdmin"}, method=RequestMethod.GET)

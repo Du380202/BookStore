@@ -300,9 +300,8 @@
     <footer class="tm-footer row tm-mt-small">
       <div class="col-12 font-weight-light">
         <p class="text-center text-white mb-0 px-4 small">
-          Copyright &copy; <b>2018</b> All rights reserved. 
-          
-          Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
+        
+       <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link"></a>
         </p>
       </div>
     </footer>
@@ -438,7 +437,33 @@
 	        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 	    }
 	 </script>
-
+	<script>
+	    $(document).ready(function() {
+	        var deleteSuccess = getUrlParameter("Success");
+	        var deleteError = getUrlParameter("Error");
+	        var previousURL = document.referrer;
+	        if (deleteSuccess) {
+	            Swal.fire({
+	                icon: "success",
+	                title: "Thông báo",
+	                text: decodeURIComponent(deleteSuccess),
+	            });
+	        } else if (deleteError) {
+	            Swal.fire({
+	                icon: "error",
+	                title: "Thông báo",
+	                text: decodeURIComponent(deleteError),
+	            });
+	        }
+	    });
+	
+	    function getUrlParameter(name) {
+	        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+	        var results = regex.exec(location.search);
+	        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	    }
+	 </script>
 		
   </body>
 </html>

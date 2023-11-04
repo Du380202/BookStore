@@ -12,7 +12,8 @@ public class Mailer {
 	@Autowired
 	JavaMailSender mailer;
 	
-	public void send(String from, String to, String subject, String body) {
+	public boolean send(String from, String to, String subject, String body) {
+		boolean check = false;
 		try {
 			MimeMessage mail = mailer.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(mail, 
@@ -25,8 +26,11 @@ public class Mailer {
 			helper.setText(body, true);
 			
 			mailer.send(mail);
+			check = true;
 		} catch (Exception e) {
+			check = false;
 			throw new RuntimeException(e);
 		}
+		return check;
 	}
 }

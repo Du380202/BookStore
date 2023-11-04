@@ -20,6 +20,8 @@ public class SignUpController {
 	
 	@Autowired
 	SessionFactory factory;
+	@Autowired
+	UserDao userDao;
 	
 	@RequestMapping(value="signup", method = RequestMethod.GET)
 	public String signUp(ModelMap model) {
@@ -29,17 +31,10 @@ public class SignUpController {
 	
 	@RequestMapping(value="signup", method = RequestMethod.POST)
 	public String createAccount(ModelMap model, @ModelAttribute("user") Users user, BindingResult errors) {
-
-		if(user.getUserName().trim().length() == 0) {
-			errors.rejectValue("UserName", "user", "Vui lòng nhập tên đăng nhập!");
-		}
-		
-		if(user.getMatKhau().trim().length() == 0) {
-			errors.rejectValue("password", "user", "Vui lòng nhập mật khẩu!");
-		}
-	
-		if(errors.hasErrors()) {
-			model.addAttribute("message", "Vui lòng sửa các lỗi sau đây!");
+		Users userT = userDao.checkUserName(user.getUserName());
+		if(userT.getUserName().equals(user.getUserName())) {
+			System.out.print(userDao.checkUserName(user.getUserName()));
+			model.addAttribute("message", "Tên đăng nhập đã tồn tại");
 		}
 		else {
 			Session session = factory.openSession();
@@ -50,11 +45,11 @@ public class SignUpController {
 				user.setRoleID(2);
 				session.save(user);
 				t.commit();
-				model.addAttribute("messageT", "Đăng ký thành công");
+				model.addAttribute("message", "Đăng ký thành công");
 			}
 			catch (Exception e) {
 				t.rollback();
-				model.addAttribute("message", "Tên đăng nhập đã tồn tại" + e);
+				
 			}
 			finally {
 				session.close();

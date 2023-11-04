@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import web.Dao.*;
 import web.Entity.CauTraLoi;
@@ -203,12 +205,23 @@ public class UserController {
 	}
 	
 	
-//	@RequestMapping("Change")
-//	public String changePass(Model model, HttpSession session, String pass) {
-//		Users user = (Users) session.getAttribute("loggedInUser");
-//		user.setMatKhau(pass);
-//		return "users/account";
-//	}
+	@RequestMapping("change")
+	public String changePass(Model model, HttpSession session,
+			@RequestParam(value="pass1",  required=false) String pass,
+			@RequestParam(value="pass2",  required=false) String newpass) {
+		Users user = (Users) session.getAttribute("loggedInUser");
+		if(BCrypt.checkpw(pass, user.getMatKhau())) {
+			String hashedPassword = BCrypt.hashpw(newpass, BCrypt.gensalt());
+			user.setMatKhau(hashedPassword);
+			userDao.update(user);
+			model.addAttribute("Success", "Đổi mật khẩu thành công");
+		}
+		else {
+			model.addAttribute("Error", "Mật khẩu không chính xác");
+		}
+		user.setMatKhau(pass);
+		return "redirect:/userAccount";
+	}
 	
 	
 	@RequestMapping("form")
@@ -278,7 +291,7 @@ public class UserController {
 		user.setDeXuat(kq);
 		userDao.update(user);
 		TheLoai tmp = categoryDao.getCategoryByLabel(kq);
-		model.addAttribute("recoment", tmp.getIdTheLoai());
+		model.addAttribute("recoment", tmp);
 		return "users/formSubmit";
 	}
 	

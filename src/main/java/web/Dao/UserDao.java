@@ -30,6 +30,22 @@ public class UserDao {
 		return user;
 	}
 	
+	public Users checkUserName(String userid) {
+		Session s = factory.getCurrentSession();
+		String hql = "FROM Users where UserName = '" + userid + "'" ;
+		Query q = s.createQuery(hql);
+		Users user = (Users) q.uniqueResult();
+		return user;
+	}
+	
+	public Users checkUserNameEmail(String userid, String email) {
+		Session s = factory.getCurrentSession();
+		String hql = "FROM Users where UserName = '" + userid + "' and Email = '" + email + "'" ;
+		Query q = s.createQuery(hql);
+		Users user = (Users) q.uniqueResult();
+		return user;
+	}
+	
 	public Users getUserByUserName(String username) {
 		Session session = factory.getCurrentSession();
 		return (Users) session.createQuery("FROM Users WHERE UserName = :username")

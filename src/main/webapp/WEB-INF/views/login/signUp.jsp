@@ -53,6 +53,9 @@
 			
 			
 			<input type="submit" class="register" value="Register">
+			<p style="text-align: center;
+					   color: white;
+					    ">Bạn đã có tài khoản? <a href="signin" style=" color: #00b9ff;font-weight: bold;">Đăng nhập</a></p>
 		</form:form>
 		<script type="text/javascript">
 			window.onload = function () {

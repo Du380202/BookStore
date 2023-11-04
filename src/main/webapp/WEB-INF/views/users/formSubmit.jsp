@@ -18,7 +18,6 @@
                 Thank you 
             </h1>
             <p id="description">
-                Câu trả lời của bạn đã được ghi lại
             </p>
         </header>
             <!-- radio button section -->
@@ -30,7 +29,8 @@
                
             </div>
             <div class="form-group">
-                <button type="submit" id="submit" class="btn"><a href="listCategory?id=${recoment}">Xem đề xuất cho bạn</a></button>
+                <button type="submit" id="submit" class="btn">Thể loại sách dành cho bạn là:
+                 <a href="listCategory?id=${recoment.getIdTheLoai()}" style="font-weight: bold;color: #0029ff;">${recoment.getTenTheLoai()}</a></button>
             </div>
     </div>
 </body>

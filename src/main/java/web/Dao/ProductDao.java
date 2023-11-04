@@ -122,6 +122,25 @@ public class ProductDao {
 			session.close();
 		}
 	}
+	
+	public boolean updatep(Sach sach) {
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		boolean check = false;
+		try {
+			session.update(sach);
+			t.commit();
+			check = true;
+		}
+		catch (Exception e) {
+			check = false;
+			t.rollback();
+		}
+		finally {
+			session.close();
+		}
+		return check;
+	}
 
 	public List<Sach> getDataProductpagin(int currentPage, int pageSize, int startRow) {
 		Session session = factory.getCurrentSession();

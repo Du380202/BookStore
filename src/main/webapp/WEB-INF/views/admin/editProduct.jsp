@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="<c:url value="ASSETS/admin/css/bootstrap.min.css" />"/>
     <!-- https://getbootstrap.com/ -->
     <link rel="stylesheet" href="<c:url value="ASSETS/admin/css/templatemo-style.css"/>"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.5/dist/sweetalert2.min.css">
     <!--
 	Product Admin CSS Template
 	https://templatemo.com/tm-524-product-admin
@@ -122,12 +123,13 @@
                 <h2 class="tm-block-title d-inline-block">Delivery</h2>
               </div>
             </div>
-            <form:form action="AddProduct" modelAttribute="sach">
+            <form:form action="editProduct" modelAttribute="sach" method="post">
             <div class="row tm-edit-product-row">
               <div class="col-xl-6 col-lg-6 col-md-12">
 			    <div class="form-group mb-3">
 			      <label for="name">Product Name
 			      </label>
+			      <form:hidden path="maSach" value="${edit.getMaSach()}" />
 			      <form:input id="name" type="text" class="form-control validate" path="tenSach" value="${edit.getTenSach()}"/>
 			    </div>
 			    <div class="form-group mb-3">
@@ -164,7 +166,7 @@
 			    
 				<div class="form-group mb-3">
 			      <label for="description">Description</label>
-			      <form:textarea class="form-control validate" rows="3"  path="moTa" value="${edit.getMoTa()}"></form:textarea>
+			      <textarea class="form-control validate" name="mota" rows="3">${edit.getMoTa()}</textarea>
 			    </div>
 			  </div>
               <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
@@ -226,6 +228,7 @@
     <script src="<c:url value="ASSETS/admin/jquery-ui-datepicker/jquery-ui.min.js"/>"></script>
     <!-- https://jqueryui.com/download/ -->
     <script src="<c:url value="ASSETS/admin/js/bootstrap.min.js"/>"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.5/dist/sweetalert2.all.min.js"></script>
     <!-- https://getbootstrap.com/ -->
     <script>
       $(function() {
@@ -234,5 +237,33 @@
         });
       });
     </script>
+    	
+	<script>
+	    $(document).ready(function() {
+	        var deleteSuccess = getUrlParameter("Success");
+	        var deleteError = getUrlParameter("Error");
+	        var previousURL = document.referrer;
+	        if (deleteSuccess) {
+	            Swal.fire({
+	                icon: "success",
+	                title: "Thông báo",
+	                text: decodeURIComponent(deleteSuccess),
+	            });
+	        } else if (deleteError) {
+	            Swal.fire({
+	                icon: "error",
+	                title: "Thông báo",
+	                text: decodeURIComponent(deleteError),
+	            });
+	        }
+	    });
+	
+	    function getUrlParameter(name) {
+	        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+	        var results = regex.exec(location.search);
+	        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	    }
+	 </script>
   </body>
 </html>
