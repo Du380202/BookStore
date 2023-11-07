@@ -17,7 +17,7 @@ public class ExcutePyFile {
             // Đợi cho tiến trình Python kết thúc
             int exitCode = process.waitFor();
             
-            System.out.println("Exit code: " + exitCode);
+//            System.out.println("Exit code: " + exitCode);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
